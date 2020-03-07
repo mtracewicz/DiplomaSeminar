@@ -46,8 +46,8 @@ Example code presenting how to create ndarrays:
 \begin{lstlisting}
 import numpy as np
 
-# Creating a rank 1 Array
-arr = np.array([1, 2, 3])
+# Creating a rank 1 Array saved in column first way
+arr = np.array([1, 2, 3],order = 'F')
 print("Array with Rank 1: \n",arr)
 
 # Creating a rank 2 Array
@@ -103,19 +103,79 @@ print(arr)
 sliced_arr = arr[:2, ::2]
 print ("Array with first 2 rows and"
     " alternate columns(0 and 2):\n", sliced_arr)
-  
+
 # Printing elements at
 # specific Indices
-Index_arr = arr[[1, 1, 0, 3], 
+Index_arr = arr[[1, 1, 0, 3],
                 [3, 2, 1, 0]]
 print ("\nElements at indices (1, 3), "
     "(1, 2), (0, 1), (3, 0):\n", Index_arr)
+
+x = np.array([[1, 2], [3, 4], [5, 6]])
+y = x[[0,1,2], [0,1,0]] 
+# First array contains indexes in first dimension, second array contains indexes in second dimsenision and so on
+# This means that example above gives use elements at indexes (0,0),(1,1),(2,0)
+print(y)
+
+# NumPy also allows use to get only the elements which meet some criteria
+# Elements bigger then 5
+print(a[a>5])
+# This omits NaN (Not a number) elements
+print a[~np.isnan(a)]
+\end{lstlisting}
+\subsection{Iteration over array}
+\begin{lstlisting}
+import numpy as np
+a = np.arange(0,60,5)
+a = a.reshape(3,4)
+
+print(f'Original array is:\n{a}')
+print(f'Transpose of the original array is:\n{a.T}')
+
+# Both this and next for will print the same output as iteration
+# is done according to how array is storred in memory
+for x in np.nditer(a):
+        print(f"{x} ")
+
+for x in np.nditer(a.T):
+        print(f"{x} ")
+
+# This however will always iterate in colum first way
+for x in np.nditer(a, order = 'F'):
+        print(f"{x} ")
+
+# User can modify elements when iterating by setting a flag
+for x in np.nditer(a, op_flags=['readwrite']):
+    x[...] = 2*x+1
+print(f'Modified array is:\n{a}')
+\end{lstlisting}
+\subsection{Data types}
+Every ndarray has associated data type, known as dtype.
+It provides information about arrays layout.
+This example should ilustrate how NumPy tries to guess data 
+and how user can force it to use particular one.
+\begin{lstlisting}
+import numpy as np
+
+# Integer datatype
+# guessed by Numpy
+x = np.array([1, 2])
+print("Integer Datatype: ",x.dtype)
+
+# Float datatype
+# guessed by Numpy
+x = np.array([1.0, 2.0])
+print("\nFloat Datatype: ",x.dtype)
+
+# Forced Datatype
+x = np.array([1, 2], dtype = np.int64)
+print("\nForcing a Datatype: ",x.dtype)
 \end{lstlisting}
 \section{Operations}
 NumPy provides a set of usefull buildin functions.
 
 \begin{lstlisting}
-  import numpy as np
+import numpy as np
 
 # Defining Array 1
 a = np.array([[1, 2],
@@ -148,30 +208,26 @@ print ("\nArray sum:\n", a @ b)
 
 # Transposition
 print ("\nMatrix transposition:\n", a,a.T)
-\end{lstlisting}
-\section{Data types}
-Every ndarray has associated data type, known as dtype.
-It provides information about arrays layout.
-This example should ilustrate how NumPy tries to guess data 
-and how user can force it to use particular one.
-\begin{lstlisting}
-import numpy as np
- 
-# Integer datatype
-# guessed by Numpy
-x = np.array([1, 2])
-print("Integer Datatype: ",x.dtype)
 
-# Float datatype
-# guessed by Numpy
-x = np.array([1.0, 2.0])
-print("\nFloat Datatype: ",x.dtype)
+# Broadcasting
+# In some situations NumPy can help use perform operations which would normaly be imposible.
+# When arrays are not of the same rank, NumPy can sometimes expand smaller one to allow the operation.
+# This expansion is called broadcasting.
+# In this example array b will be broadcasted to match array a
+a = np.array([[0.0,0.0,0.0],[10.0,10.0,10.0],[20.0,20.0,20.0],[30.0,30.0,30.0]]) 
+b = np.array([1.0,2.0,3.0])
 
-# Forced Datatype
-x = np.array([1, 2], dtype = np.int64)
-print("\nForcing a Datatype: ",x.dtype)
+print(f'First array:\n{a}')
+
+print(f'Second array:\n{b}')
+
+print(f'First + Second array:\n{a+b}')
+
+# Sorting
+# NumPy allows to chose from quicksort, mergesort, heapsort algorithms (passed as kind argument)
+np.sort(a,axis = 0,kind = "quicksort")
 \end{lstlisting}
-\section{ List of NumPy methods:}
+\section{List of NumPy methods:}
 \begin{itemize}
   \item all()
   \item any()
@@ -284,5 +340,18 @@ print("\nForcing a Datatype: ",x.dtype)
   \item arccos()
   \item arctan()
   \item arctan2()
+  \item flatten
+  \item transpose
+  \item rollaxis
+  \item swapaxes
+  \item expand\_dims
+  \item squeeze
+  \item concatenate
+  \item stack
+  \item htsack
+  \item vstack
+  \item split
+  \item hsplit
+  \item vsplit
 \end{itemize}
 \end{document}
