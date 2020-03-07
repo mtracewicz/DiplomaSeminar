@@ -134,3 +134,4 @@ dmypy.json
 #pdflatex tmp files
 *.log
 *.aux
+*.toc
