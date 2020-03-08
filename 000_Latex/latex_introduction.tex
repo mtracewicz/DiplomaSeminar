@@ -2,6 +2,7 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{enumitem}
+\usepackage{amsmath}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -272,7 +273,116 @@ Footnotes are numbered automaticly.
 It is imperative, that the label is contained in footnote,
 otherwise the label will refer to section
 \section{Mathematics}
+\LaTeX is designed in a way which makes it easy to insert mathematical equations.
+There are two options how user can handle inputing maths into document.
+The first one is embeding the formula inline directly into the text.
+This can be done using \$.
+For example:
+\begin{verbatim}
+    Exponential functions can look like this: $f(x) = 2^x$
+\end{verbatim}
+Which will render as:
+Exponential functions can look like this: $f(x) = 2^x$
+Second option includes creating new environment.
+Two main math environments are "equation" which is used to render one equation 
+(if user trys to enter more it will resault in compilation error)
+and "align" which is used to render multiple equations at the same time.
+Examples:
+\begin{verbatim}
+    \usepackage{amsmath}
+    % Code omitted...
+    \begin{equation*}
+        f(x) = \frac{1}{x}
+    \end{equation*}
+    \begin{align*}
+        1 + 2x &= 3 \\
+            3x &= 5 - 2
+    \end{align*}
+\end{verbatim}
+This will be renddered as:
+\begin{equation*}
+    f(x) = \frac{1}{x}
+\end{equation*}
+\begin{align*}
+    1 + 2x &= 3 \\
+        3x &= 5 - 2
+\end{align*}
+Lets take a closer look at "align" environment.
+As its name sugests, it will align equations. This will happen at '\&' sign.
+Each equation needs to be separeted with "\textbackslash\textbackslash".
+Asterisk at the end of both environments are used to indicate that user doesn't want them to be numbered.
+\LaTeX is capable of displaying much more complicated equations some notable examples:
+\begin{verbatim}
+\begin{align*}
+\left[
+\begin{matrix}
+1 & 0\\
+0 & 1
+\end{matrix}
+\right]
+&\ast
+\left[
+\begin{matrix}
+a & b\\
+c & d
+\end{matrix}
+\right]
+=
+\left[
+\begin{matrix}
+a & b\\
+c & d
+\end{matrix}
+\right]\\
+&\int^b_a\left(\frac{1}{\sqrt{x\pi}}\right)\\
+T^{i_1 i_2 \dots i_p}_{j_1 j_2 \dots j_q} &= T(x^{i_1},\dots,x^{i_p},e_{j_1},\dots,e_{j_q})
+\end{align*}
+\end{verbatim}
+Which is rendered as:
+\begin{align*}
+\left[
+\begin{matrix}
+1 & 0\\
+0 & 1
+\end{matrix}
+\right]
+&\ast
+\left[
+\begin{matrix}
+a & b\\
+c & d
+\end{matrix}
+\right]
+=
+\left[
+\begin{matrix}
+a & b\\
+c & d
+\end{matrix}
+\right]\\
+&\int^b_a\left(\frac{1}{\sqrt{x\pi}}\right)\\
+T^{i_1 i_2 \dots i_p}_{j_1 j_2 \dots j_q} &= T(x^{i_1},\dots,x^{i_p},e_{j_1},\dots,e_{j_q})
+\end{align*}
+Lets take a closer look. To create matrix user creates
+\begin{verbatim}
+\left[
+\begin{matrix}
+a & b\\
+c & d
+\end{matrix}
+\right]
+\end{verbatim}
+\textbackslash left[ and \textbackslash right] are responsible for creatinon of scaling braces around matrix.
+Then it is created using "matrix" environment, 
+new line character ("\textbackslash\textbackslash") is responsible for creating new row.
+\textbackslash int - integral symbol\\
+\textbackslash frac - fractions\\
+\textbackslash sqrt - squere root\\
+\^ - is used to create indexes (first one is top, second is bottom)\\
+\textbackslash dots - inserts "..."\\
+\textbackslash pi - inserts Pi symbol (any greek letter can be inserted in the same fashion)\\
 \section{Pictures}
+
 \section{Bibliography}
 \section{Tables}
 \section{Packages}
