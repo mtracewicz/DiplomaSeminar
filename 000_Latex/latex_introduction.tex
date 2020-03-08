@@ -3,6 +3,7 @@
 \usepackage{color}
 \usepackage{enumitem}
 \usepackage{amsmath}
+\usepackage{hyperref}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -385,10 +386,23 @@ new line character ("\textbackslash\textbackslash") is responsible for creating 
 \textbackslash dots - inserts "..."\\
 \textbackslash pi - inserts Pi symbol (any greek letter can be inserted in the same fashion)\\
 \section{Pictures}
-
 \section{Bibliography}
 \section{Tables}
 \section{Packages}
+\LaTeX has a lot of both user created and built in packges.
+To find packages visit: \href{https://www.ctan.org/pkg}{ctan.org}
+User can download and remove packages by using:
+\begin{lstlisting}
+tlmgr install <package1> <package2> ...
+tlmgr remove <package1> <package2> ...
+\end{lstlisting}
+To use package we need to register it using
+\begin{verbatim}
+\usepackage{listings}
+\end{verbatim}
+Doing so will give user ability to use commands provided in package.
+This particular package provides way to do source code highlighting.
+It will be described in next section.
 \section{Source code}
 When writing about programing it is necessary to include code snippets in document.
 To do this in \LaTeX we need to first include two packages:
