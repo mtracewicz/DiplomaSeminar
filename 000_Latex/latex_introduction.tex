@@ -1,7 +1,27 @@
-\documentclass{article}
+\documentclass[12pt]{article}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{enumitem}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Bash,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
 \author{Michał Tracewicz}
 \date{2020-03-07}
-\title{LaTeX - Introduction}
+\title{\LaTeX - Introduction}
 \begin{document}
 \pagenumbering{gobble}
 \maketitle
@@ -9,22 +29,248 @@
 \tableofcontents
 \newpage
 \pagenumbering{arabic}
-\section{What is LaTeX?}
-LaTeX is a markup language to typeset documents.
+\section{What is \LaTeX?}
+\LaTeX is a markup language to typeset documents.
 It can be understood as a way to programaticly create documents.
+\section{Compiling document}
+Document writen using \LaTeX need to be compiled before they are rendered into output file.
+First of user needs to install \LaTeX. In Ubuntu Linux this can be done with following commands:
+\begin{lstlisting}
+    sudo apt install textlive
+    sudo apt-get install texlive-latex-extra
+\end{lstlisting}
+User should create '.tex' file in which they write their document using \LaTeX.
+Afterwards this document should be compiled using following command:
+\begin{lstlisting}
+    pdflatex [source file path]
+\end{lstlisting}
+It will produce '.pdf' file in current directory.
 \section{Document structure}
 \subsection{Basic document structure}
-Basic LaTeX document structure should look something like this:
+\LaTeX uses commands to do format, structureing document etc.
+For exaple:
+\begin{verbatim}
+    \section{Name}
+\end{verbatim}
+This will create numbered section in document with heading "Name".
+Basic \LaTeX document should look something like this:
 \begin{verbatim}
 \documentclass{article}
 \begin{document}
   Hello World!
 \end{document}
 \end{verbatim}
+It begins with with:
+\begin{verbatim}
+\documentclass{article}
+\end{verbatim}
+All of \LaTeX comands starts with '\textbackslash'.
+First line of our document should be documentclass command.
+It determins how the whole document will be rendered. "article" is one of most common classes. Other notable
+options are "book", "report", "slides", "beamer" (the last one is used to create presentations).
+Next we have:
+\begin{verbatim}
+\begin{document}
+    Hello World!
+\end{document}
+\end{verbatim}
+Here we create an environment. It is possible to create multiple environments in one document.
+They are parts of document to which certain typeseting rules applay.
+Inside it author inserts content of theirs document.
+Everything which will be put between those two segments is called a "Preamble".
+Here user can point which packages will be used (more on this later), insert metadata from which
+document title page will be created. Things which are in preamble will not be directly rendered on document.
+For exaple lets take a look at part of this documents preamble:
+\begin{verbatim}
+\documentclass[12pt]{article}
+\usepackage{listings}
+
+\author{Michał Tracewicz}
+\date{2020-03-07}
+\title{\LaTeX - Introduction}
+
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\pagenumbering{arabic}
+\end{document}
+\end{verbatim}
+Document title, author and date are inserted and then later on rendered with:
+\begin{verbatim}
+    \maketitle
+\end{verbatim}
+Looking at this snippet there are some more interesting commands
+\begin{verbatim}
+    \pagenumbering{gobble}
+    \newpage
+    \pagenumbering{arabic}
+\end{verbatim}
+Going top to bottom first user disables title page from being numbered. Then user forces new page to make sure 
+only title is placed on first page. Next command enables numbering of pages using arabic numbers.
 \subsection{Sections, paragraphs}
+\LaTeX gives its users a way to automaticly create and number section headings.
+In addition user can create headings without numbering using paragraphs.
+To structure document one can use those commands:
+\begin{verbatim}
+    \section{Section name}
+    \subsection{Subsection name}
+    \subsubsection{Subsubsection name}
+
+    \paragraph{Paragraph name}
+    \subparagraph{Subparagraph name}
+\end{verbatim}
 \subsection{Table of contents}
+If user had used sections to structure theirs document \LaTeX provides a command to create table of contents
+based secotions, subsections,subsubsections.
+\begin{verbatim}
+    \tableofcontents
+\end{verbatim}
 \subsection{Lists}
+When writing \LaTeX documents user has an ability to create both ordered and unordered lists.
+\subsubsection{Unordered lists}
+Following snippet can be used to create unordered list which will contain three entries named
+"First", "Second", "Third":
+\begin{verbatim}
+    \begin{itemize}
+        \item First
+        \item Second
+        \item Third
+    \end{itemize}
+\end{verbatim}
+This wil render as:
+\begin{itemize}
+    \item First
+    \item Second
+    \item Third
+\end{itemize}
+When working with unordered lists sometimes it is desierable to change item symbol.
+This can be done by:
+\begin{verbatim}
+    \begin{itemize}
+        \item[--] Dash
+        \item[$\ast$] Asterisk
+        \item[$\beta$] Any mathematical symbol
+    \end{itemize}
+\end{verbatim}
+Which will render as:
+\begin{itemize}
+    \item[--] Dash
+    \item[$\ast$] Asterisk
+    \item[$\beta$] Any mathematical symbol
+\end{itemize}
+To change symbol for all elements we will use package and it will be 
+demonstrated in Ordered List section.
+\subsubsection{Ordered lists}
+Following snippet can be used to create ordered list which will contain three entries named
+"First", "Second", "Third":
+\begin{verbatim}
+    \begin{enumerate}
+        \item First
+        \item Second
+        \item Third
+    \end{enumerate}
+\end{verbatim}
+This will render as:
+\begin{enumerate}
+    \item First
+    \item Second
+    \item Third
+\end{enumerate}
+Changeing enumeration can be done in two steps.
+First user needs to add this to theirs preamble:
+\begin{verbatim}
+    \usepackage{enumitem}
+\end{verbatim}
+Then we can use following:
+\begin{verbatim}
+% Roman numbers
+\begin{enumerate}[label=(\roman*)]
+    \item First
+    \item Second
+    \item Third
+\end{enumerate}
+
+% Arabic numbers
+\begin{enumerate}[label=\arabic*)]
+    \item First
+    \item Second
+    \item Third
+\end{enumerate}
+
+% Alphabetical
+\begin{enumerate}[label=\alph*)]
+    \item First
+    \item Second
+    \item Third
+\end{enumerate}
+\end{verbatim}
+Which will render as:
+\begin{enumerate}[label=(\roman*)]
+    \item First
+    \item Second
+    \item Third
+\end{enumerate}
+\begin{enumerate}[label=\arabic*)]
+    \item First
+    \item Second
+    \item Third
+\end{enumerate}
+\begin{enumerate}[label=\alph*)]
+    \item First
+    \item Second
+    \item Third
+\end{enumerate}
+This can also be used to change symbols in unordered lists:
+\begin{verbatim}
+    \begin{itemize}[label=$\ast$)]
+        \item First
+        \item Second
+        \item Third
+    \end{itemize}
+\end{verbatim}
+Which will render as:
+\begin{itemize}[label=$\ast$)]
+    \item First
+    \item Second
+    \item Third
+\end{itemize}
+\subsubsection{Nested lists}
+Following snippet can be used to create nested ordered list which will contain five entries named
+"First" - it will contain subentries "Second" and "Third", "Fourth", "Fifth"
+\begin{verbatim}
+    \begin{enumerate}
+        \item First
+        \begin{enumerate}
+            \item Second
+            \item Third
+        \end{enumerate}
+        \item Fourth
+        \item Fifth
+    \end{enumerate}
+\end{verbatim}
+This will render as:
+\begin{enumerate}
+    \item First
+    \begin{enumerate}
+        \item Second
+        \item Third
+    \end{enumerate}
+    \item Fourth
+    \item Fifth
+\end{enumerate}
 \subsection{Footnotes}
+In \LaTeX there are is an easy way of creating and refering footnotes.
+\begin{verbatim}
+    Example \footnote{\label{myfootnote} Hello footnote}
+    Refering to footnote \ref{myfootnote}
+\end{verbatim}
+Which will render as:
+Example \footnote{\label{myfootnote} Hello footnote}
+Refering to footnote\ref{myfootnote}
+Footnotes are numbered automaticly.
+It is imperative, that the label is contained in footnote,
+otherwise the label will refer to section
 \section{Mathematics}
 \section{Pictures}
 \section{Bibliography}
