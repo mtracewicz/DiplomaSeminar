@@ -390,6 +390,86 @@ new line character ("\textbackslash\textbackslash") is responsible for creating 
 \section{Tables}
 \section{Packages}
 \section{Source code}
+When writing about programing it is necessary to include code snippets in document.
+To do this in \LaTeX we need to first include two packages:
+\begin{verbatim}
+\usepackage{listings}
+\usepackage{color}
+\end{verbatim}
+next step is to configure synatx highlighting:
+\begin{verbatim}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% This will be configured for all listings in document
+\lstset{frame=tb,
+    language=Python,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3
+}
+\end{verbatim}
+Above example sets up synatx highlighting for Python.
+Afterwards we can insert code by createing new environments:
+\begin{verbatim}
+% Here in "[]" user configures settings only for current listing
+\begin{lstlisting}[frame=tb,
+    language=Python,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3]
+import numpy as np
+a = np.arange(0,60,5)
+a = a.reshape(3,4)
+
+print(f'Original array is:\n{a}')
+print(f'Transpose of the original array is:\n{a.T}')
+\end{lstlisting}
+\end{verbatim}
+Which will be rendered as:
+\begin{lstlisting}[frame=tb,
+    language=Python,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3]
+import numpy as np
+a = np.arange(0,60,5)
+a = a.reshape(3,4)
+
+print(f'Original array is:\n{a}')
+print(f'Transpose of the original array is:\n{a.T}')
+\end{lstlisting}
 \section{Graphs}
 \section{Hyperlinks}
 \end{document}
