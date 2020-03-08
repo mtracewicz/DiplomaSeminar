@@ -109,6 +109,8 @@ Looking at this snippet there are some more interesting commands
 \end{verbatim}
 Going top to bottom first user disables title page from being numbered. Then user forces new page to make sure 
 only title is placed on first page. Next command enables numbering of pages using arabic numbers.
+To force \LaTeX to create new line use "\textbackslash\textbackslash",
+to force new line use "\textbackslash newline", new page "\textbackslash newpage"
 \subsection{Sections, paragraphs}
 \LaTeX gives its users a way to automaticly create and number section headings.
 In addition user can create headings without numbering using paragraphs.
@@ -361,7 +363,8 @@ c & d
 \end{matrix}
 \right]\\
 &\int^b_a\left(\frac{1}{\sqrt{x\pi}}\right)\\
-T^{i_1 i_2 \dots i_p}_{j_1 j_2 \dots j_q} &= T(x^{i_1},\dots,x^{i_p},e_{j_1},\dots,e_{j_q})
+T^{i_1 i_2 \dots i_p}_{j_1 j_2 \dots j_q} &= T(x^{i_1},\dots,x^{i_p},e_{j_1},\dots,e_{j_q})\\
+\lim^{}_{x->\inf}\frac{1}{x} &= 0
 \end{align*}
 Lets take a closer look. To create matrix user creates
 \begin{verbatim}
@@ -378,7 +381,7 @@ new line character ("\textbackslash\textbackslash") is responsible for creating 
 \textbackslash int - integral symbol\\
 \textbackslash frac - fractions\\
 \textbackslash sqrt - squere root\\
-\^ - is used to create indexes (first one is top, second is bottom)\\
+"\textasciicircum\{a\}\_\{b\}" - is used to create indexes where "a" is top and "b" is bottom)\\
 \textbackslash dots - inserts "..."\\
 \textbackslash pi - inserts Pi symbol (any greek letter can be inserted in the same fashion)\\
 \section{Pictures}
