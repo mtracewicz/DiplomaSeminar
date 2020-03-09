@@ -488,6 +488,29 @@ Which renders as:
     \label{fig:coffecomparison}
 \end{figure}
 \section{Bibliography}
+To automate createion of bibliography user needs to use external tools like:
+"Bibtex" or "Biblatex". To use BibTex we simply need to add :
+\begin{verbatim}
+\bibliography{bibliography_file}
+\bibliographystyle{ieeetr}
+\end{verbatim}
+just before \textbackslash end{document}.
+First comand is used to tell BibTex which file ".bib" file should it use and second one is
+responsible for seting style in which our bibliography will be displayed. ".bib" files can easly be created
+with online editors. To use citation in our document we need to insert
+\begin{verbatim}
+    \cite{WEBSITE:1}
+\end{verbatim} \cite{WEBSITE:1} as I did here. Most of the examples I used in this article are come from
+this site, some others come from \cite{WEBSITE:2} and the rest are either from \cite{WEBSITE:3}.
+Coffee image was taken from \cite{IMAGE:1}.
+If we add BibTex we need to change our compilation proces to:
+\begin{lstlisting}
+    pdflatex [source file path]
+    bibtex [source file path]
+    pdflatex [source file path]
+    pdflatex [source file path]
+\end{lstlisting}
+as presented in\cite{WEBSITE:4}, reader can also find how to use Biblatex in the same article.
 \section{Tables}
 To create tables user needs to combine two environments, "table" and "tabular".
 Example code to create table looks like this:\\
@@ -824,9 +847,9 @@ Some other examples of "tikpicture" environment include:\\\\\\
 If user adds "circuitikz" package it is possible to create circuit diagrams:\\\\
 \begin{circuitikz}
     \draw (0,0)
-    to[V,v=$U_q$] (0,2) % The voltage source
+    to[V,v=$U_q$] (0,2)
     to[short] (2,2)
-    to[R=$R_1$] (2,0) % The resistor
+    to[R=$R_1$] (2,0)
     to[short] (0,0);
     \draw (2,2)
     to[short] (4,2)
@@ -847,4 +870,6 @@ My github page page:\url{https://github.com/mtracewicz}\\
 Which will get rendered as:\\
 My github page page:\href{https://github.com/mtracewicz}{github.com}\\
 My github page page:\url{https://github.com/mtracewicz}\\
+\bibliography{latex_introduction_bibliography}
+\bibliographystyle{ieeetr}
 \end{document}
