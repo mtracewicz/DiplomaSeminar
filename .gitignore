@@ -136,3 +136,10 @@ dmypy.json
 *.aux
 *.toc
 *.out
+
+#bibtex
+*.bbl
+*.blg
+
+#pdf
+*.pdf
