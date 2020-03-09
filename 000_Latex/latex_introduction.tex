@@ -407,7 +407,19 @@ new line character ("\textbackslash\textbackslash") is responsible for creating 
 \textbackslash pi - inserts Pi symbol (any greek letter can be inserted in the same fashion)\\
 \section{Pictures}
 A lot of documents need pictures to present their content properly. \LaTeX allow users to
-insert images by using this package "graphicx". This package might prove usefull as well: "subcaption".
+insert images by using this package "graphicx".
+Lets insert first image:
+\begin{verbatim}
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+        \includegraphics[width=\linewidth]{coffee.jpg}
+        \caption{Coffee.}
+    \end{subfigure}
+    \label{fig:coffee}
+\end{figure}
+\end{verbatim}
+Which will be rendered as:
 \begin{figure}[h!]
     \centering
     \begin{subfigure}[b]{0.4\linewidth}
@@ -415,6 +427,55 @@ insert images by using this package "graphicx". This package might prove usefull
       \caption{Coffee.}
     \end{subfigure}
     \label{fig:coffee}
+\end{figure}
+Figure environment will take care of numberinga and positioning of image. To include image user needs to
+use \textbackslash includegraphics and pass a path to picture in curly braces. In this example width is set top
+0.4\textbackslash linewidth which means that picture will be scaled up/down to take 0.4 of document width.
+\textbackslash caption allows user to add visable caption to an image, \textbackslash label adds invisible label
+which can be helpfull if user wants to refer to this image later on.
+User can sugest or force how \LaTeX will position an image. It is done by putting one of following values into squere
+brackets after \textbackslash begin{figure}:
+\begin{itemize}
+    \item h (here) - same location
+    \item t (top) - top of page
+    \item b (bottom) - bottom of page
+    \item p (page) - on an extra page
+    \item ! (override) - will force the specified location
+\end{itemize}
+Sometimes there is the need to compare two images thankfully \LaTeX
+allows to do this preaty easly by using "subcaption" package.
+\begin{verbatim}
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+        \includegraphics[width=\linewidth]{coffee.jpg}
+        \caption{Coffee.}
+        \label{fig:coffee}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \includegraphics[width=\linewidth]{coffee.jpg}
+        \caption{another Coffee.}
+        \label{fig:coffee2}
+    \end{subfigure}
+    \caption{Coffee comparison.}
+    \label{fig:coffecomparison}
+\end{figure}
+\end{verbatim}
+Which renders as:
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{coffee.jpg}
+      \caption{Coffee.}
+      \label{fig:coffee}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\linewidth}
+        \includegraphics[width=\linewidth]{coffee.jpg}
+        \caption{another Coffee.}
+        \label{fig:coffee2}
+    \end{subfigure}
+    \caption{Coffee comparison.}
+    \label{fig:coffecomparison}
 \end{figure}
 \section{Bibliography}
 \section{Tables}
