@@ -6,6 +6,8 @@
 \usepackage{hyperref}
 \usepackage{pgfplots}
 \usepackage{circuitikz}
+\usepackage{graphicx}
+\usepackage{subcaption}
 \usetikzlibrary{positioning}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -404,6 +406,16 @@ new line character ("\textbackslash\textbackslash") is responsible for creating 
 \textbackslash dots - inserts "..."\\
 \textbackslash pi - inserts Pi symbol (any greek letter can be inserted in the same fashion)\\
 \section{Pictures}
+A lot of documents need pictures to present their content properly. \LaTeX allow users to
+insert images by using this package "graphicx". This package might prove usefull as well: "subcaption".
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.4\linewidth}
+      \includegraphics[width=\linewidth]{coffee.jpg}
+      \caption{Coffee.}
+    \end{subfigure}
+    \label{fig:coffee}
+\end{figure}
 \section{Bibliography}
 \section{Tables}
 To create tables user needs to combine two environments, "table" and "tabular".
