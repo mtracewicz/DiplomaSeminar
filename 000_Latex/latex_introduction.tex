@@ -127,6 +127,21 @@ To structure document one can use those commands:
     \paragraph{Paragraph name}
     \subparagraph{Subparagraph name}
 \end{verbatim}
+\subsection{Packages}
+\LaTeX has a lot of both user created and built in packges.
+To find packages visit: \href{https://www.ctan.org/pkg}{ctan.org}
+User can download and remove packages by using:
+\begin{lstlisting}
+tlmgr install <package1> <package2> ...
+tlmgr remove <package1> <package2> ...
+\end{lstlisting}
+To use package we need to register it using
+\begin{verbatim}
+\usepackage{listings}
+\end{verbatim}
+Doing so will give user ability to use commands provided in package.
+This particular package provides way to do source code highlighting.
+It will be described in later section.
 \subsection{Table of contents}
 If user had used sections to structure theirs document \LaTeX provides a command to create table of contents
 based secotions, subsections,subsubsections.
@@ -296,7 +311,7 @@ and "align" which is used to render multiple equations at the same time.
 Examples:
 \begin{verbatim}
     \usepackage{amsmath}
-    % Code omitted...
+    % Code omitted for clarity...
     \begin{equation*}
         f(x) = \frac{1}{x}
     \end{equation*}
@@ -391,21 +406,39 @@ new line character ("\textbackslash\textbackslash") is responsible for creating 
 \section{Pictures}
 \section{Bibliography}
 \section{Tables}
-\section{Packages}
-\LaTeX has a lot of both user created and built in packges.
-To find packages visit: \href{https://www.ctan.org/pkg}{ctan.org}
-User can download and remove packages by using:
-\begin{lstlisting}
-tlmgr install <package1> <package2> ...
-tlmgr remove <package1> <package2> ...
-\end{lstlisting}
-To use package we need to register it using
+To create tables user needs to combine two environments, "table" and "tabular".
+Example code to create table looks like this:\\
 \begin{verbatim}
-\usepackage{listings}
+\begin{table}[h!]
+\begin{center}
+    \caption{Your first table.}
+    \label{tab:table1}
+    \begin{tabular}{l|c|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    1 & 1110.1 & a\\
+    2 & 10.1 & b\\
+    3 & 23.113231 & c\\
+    \end{tabular}
+\end{center}
+\end{table}
 \end{verbatim}
-Doing so will give user ability to use commands provided in package.
-This particular package provides way to do source code highlighting.
-It will be described in next section.
+Which will render as:
+\begin{table}[h!]
+\begin{center}
+    \caption{Your first table.}
+    \label{tab:table1}
+    \begin{tabular}{l|c|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    1 & 1110.1 & a\\
+    2 & 10.1 & b\\
+    3 & 23.113231 & c\\
+    \end{tabular}
+\end{center}
+\end{table}
 \section{Source code}
 When writing about programing it is necessary to include code snippets in document.
 To do this in \LaTeX we need to first include two packages:
@@ -575,10 +608,10 @@ If user adds "circuitikz" package it is possible to create circuit diagrams:\\\\
 To embed clickable links in \LaTeX document import "hyperref" package and use one of following
 commands:
 \begin{verbatim}
-UMK WMiI page:\href{www.mat.umk.pl}{Faculty of Mathematics UMK}
-UMK WMiI page:\url{www.mat.umk.pl}
+My github page page:\href{https://github.com/mtracewicz}{github.com}\\
+My github page page:\url{https://github.com/mtracewicz}\\
 \end{verbatim}
 Which will get rendered as:\\
-UMK WMiI page:\href{www.mat.umk.pl}{Faculty of Mathematics UMK}\\
-UMK WMiI page:\url{www.mat.umk.pl}\\
+My github page page:\href{https://github.com/mtracewicz}{github.com}\\
+My github page page:\url{https://github.com/mtracewicz}\\
 \end{document}
