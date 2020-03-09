@@ -4,6 +4,9 @@
 \usepackage{enumitem}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{pgfplots}
+\usepackage{circuitikz}
+\usetikzlibrary{positioning}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -484,7 +487,90 @@ a = a.reshape(3,4)
 print(f'Original array is:\n{a}')
 print(f'Transpose of the original array is:\n{a.T}')
 \end{lstlisting}
-\section{Graphs}
+\section{Drawing}
+In \LaTeX it is possible to plot functions and draw, to do so user needs to includee package "pgfplots".
+Package documentations: \href{https://mirrors.nic.cz/tex-archive/graphics/pgf/contrib/pgfplots/doc/pgfplots.pdf}{Pdfplots}
+Example code looks like this:
+\begin{verbatim}
+\usepackage{pgfplots}
+% code ommited for clarity ...
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    xmin=-10,
+    xmax=10,
+    ymin=0,
+    ymax=60,
+    ylabel={$f(x) = x^2 - x +4$},
+]
+\addplot {x^2 - x +4};
+\end{axis}
+\end{tikzpicture}
+\end{verbatim}
+This will get rendered as:
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    xmin=-10,
+    xmax=10,
+    ymin=0,
+    ymax=60,
+    ylabel={$f(x) = x^2 - x +4$}
+]
+\addplot {x^2 - x +4};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Some other examples of "tikpicture" environment include:\\\\\\
+\begin{tikzpicture}[
+    roundnode/.style={circle, draw=green!60, fill=green!5, very thick, minimum size=7mm},
+    squarednode/.style={rectangle, draw=red!60, fill=red!5, very thick, minimum size=5mm},
+]
+\node[squarednode]      (maintopic)                              {2};
+\node[roundnode]        (uppercircle)       [above=of maintopic] {1};
+\node[squarednode]      (rightsquare)       [right=of maintopic] {3};
+\node[roundnode]        (lowercircle)       [below=of maintopic] {4};
+\draw[->] (uppercircle.south) -- (maintopic.north);
+\draw[->] (maintopic.east) -- (rightsquare.west);
+\draw[->] (rightsquare.south) .. controls +(down:7mm) and +(right:7mm) .. (lowercircle.east);
+\end{tikzpicture}\\\\\\\\
+\begin{tikzpicture}
+\draw[blue, very thick] (0,0) rectangle (3,2);
+\draw[orange, ultra thick] (4,0) -- (6,0) -- (5.7,2) -- cycle;
+\end{tikzpicture}\\\\\\\\
+\begin{tikzpicture}
+\filldraw[color=red!60, fill=red!5, very thick](-1,0) circle (1.5);
+\fill[blue!50] (2.5,0) ellipse (1.5 and 0.5);
+\draw[ultra thick, ->] (6.5,0) arc (0:220:1);
+\end{tikzpicture}\\\\\\\\
+\begin{tikzpicture}
+\draw (-2,0) -- (2,0);
+\filldraw [gray] (0,0) circle (2pt);
+\draw (-2,-2) .. controls (0,0) .. (2,-2);
+\draw (-2,2) .. controls (-1,0) and (1,0) .. (2,2);
+\end{tikzpicture}\\\\\\\\
+\begin{tikzpicture}
+\draw[gray, thick] (-1,2) -- (2,-4);
+\draw[gray, thick] (-1,-1) -- (2,2);
+\filldraw[black] (0,0) circle (2pt) node[anchor=west] {Intersection point};
+\end{tikzpicture}\\\\\\\\
+If user adds "circuitikz" package it is possible to create circuit diagrams:\\\\
+\begin{circuitikz}
+    \draw (0,0)
+    to[V,v=$U_q$] (0,2) % The voltage source
+    to[short] (2,2)
+    to[R=$R_1$] (2,0) % The resistor
+    to[short] (0,0);
+    \draw (2,2)
+    to[short] (4,2)
+    to[L=$L_1$] (4,0)
+    to[short] (2,0);
+    \draw (4,2)
+    to[short] (6,2)
+    to[C=$C_1$] (6,0)
+    to[short] (4,0);
+ \end{circuitikz}
 \section{Hyperlinks}
 To embed clickable links in \LaTeX document import "hyperref" package and use one of following
 commands:
