@@ -1,0 +1,15 @@
+\documentclass{article}
+\title{The Fourier transform}
+\usepackage{amsmath}
+\begin{document}
+\maketitle
+\paragraph{The Fourier transform}
+decomposes a function (often a function of the time, or a signal) into its constituent frequencies.
+\begin{align*}
+\hat f(\xi)=\int^{\inf}_{-\inf}f(x)e^{-2\pi ix\xi}_{}dx
+\end{align*}
+\paragraph{Inverse transform}
+\begin{align*}
+f(x) = \int^{\inf}_{-\inf}\hat f(\xi)e^{2\pi ix\xi}_{}d\xi
+\end{align*}
+\end{document}
