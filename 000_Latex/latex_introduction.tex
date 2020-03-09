@@ -8,6 +8,10 @@
 \usepackage{circuitikz}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage{multirow}
+
 \usetikzlibrary{positioning}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
@@ -25,8 +29,12 @@
   breakatwhitespace=true,
   tabsize=3
 }
+\sisetup{
+  round-mode          = places,
+  round-precision     = 2, 
+}
 
-\author{Michał Tracewicz}
+\author{Micha\l{} Tracewicz}
 \date{2020-03-07}
 \title{\LaTeX - Introduction}
 \begin{document}
@@ -45,6 +53,7 @@ First of user needs to install \LaTeX. In Ubuntu Linux this can be done with fol
 \begin{lstlisting}
     sudo apt install textlive
     sudo apt-get install texlive-latex-extra
+    sudo apt-get install texlive-science
 \end{lstlisting}
 User should create '.tex' file in which they write their document using \LaTeX.
 Afterwards this document should be compiled using following command:
@@ -426,6 +435,7 @@ Which will be rendered as:
       \includegraphics[width=\linewidth]{coffee.jpg}
       \caption{Coffee.}
     \end{subfigure}
+    \caption{Coffee picture}
     \label{fig:coffee}
 \end{figure}
 Figure environment will take care of numberinga and positioning of image. To include image user needs to
@@ -450,7 +460,7 @@ allows to do this preaty easly by using "subcaption" package.
     \begin{subfigure}[b]{0.4\linewidth}
         \includegraphics[width=\linewidth]{coffee.jpg}
         \caption{Coffee.}
-        \label{fig:coffee}
+        \label{fig:coffee1}
     \end{subfigure}
     \begin{subfigure}[b]{0.4\linewidth}
         \includegraphics[width=\linewidth]{coffee.jpg}
@@ -467,7 +477,7 @@ Which renders as:
     \begin{subfigure}[b]{0.4\linewidth}
       \includegraphics[width=\linewidth]{coffee.jpg}
       \caption{Coffee.}
-      \label{fig:coffee}
+      \label{fig:coffee1}
     \end{subfigure}
     \begin{subfigure}[b]{0.4\linewidth}
         \includegraphics[width=\linewidth]{coffee.jpg}
@@ -512,6 +522,156 @@ Which will render as:
     \end{tabular}
 \end{center}
 \end{table}
+"table" environment is responsible for holding tables caption, label and its positioning on page.
+It works in the same way as with \ref{fig:coffee} on page~\pageref{fig:coffee}.
+"tabular" environment is used to create table itself. "\&" is used as column separator and "\textbackslash\textbackslash"
+is used as new row. Vertical lines are passed in squere brackets to "tabular" environment as "|" character.
+The letters which are next to them tell \LaTeX how to allign content in column:
+\begin{itemize}
+    \item l - left
+    \item c - center
+    \item r - right
+\end{itemize}
+Row separators can be added with \textbackslash hline. To align numbers according to deciaml point use
+needs to include "siunitx" package and configure it. Example configuration looks something like this:
+\begin{verbatim}
+\usepackage{siunitx} 
+\sisetup{
+  round-mode          = places,
+  round-precision     = 2,
+}
+\end{verbatim}
+Now when this is done user can use new option when setting column alignment "S".
+For example:
+\begin{table}[h!]
+\begin{center}
+    \caption{Your second table.}
+    \label{tab:table2}
+    \begin{tabular}{l|S|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    1 & 1110.1 & a\\
+    2 & 10.1 & b\\
+    3 & 23.113231 & c\\
+    \end{tabular}
+\end{center}
+\end{table}
+Sometimes it is necessary for a cell to span multiple rows and/or columns.
+This can be done with "multirow"and "multicolumn" commands.
+To use them we need to include "mutirow" package.
+lets start with multirow. It takes three arguments: NUMBER\_OF\_ROWS, WIDTH, CONTENT.
+Width can be set to "*" to make it automatic.
+Example presenting alpha value spanning two rows:
+\begin{verbatim}
+\begin{table}[h!]
+\begin{center}
+    \caption{Multirow table.}
+    \label{tab:table3}
+    \begin{tabular}{l|S|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    \multirow{2}{*}{12} & 1110.1 & a\\ % <-- Combining 2 rows with arbitrary with (*) and content 12
+    & 10.1 & b\\ % <-- Content of first column omitted.
+    \hline
+    3 & 23.113231 & c\\
+    4 & 25.113231 & d\\
+    \end{tabular}
+\end{center}
+\end{table}
+\end{verbatim}
+\begin{table}[h!]
+\begin{center}
+    \caption{Multirow table.}
+    \label{tab:table3}
+    \begin{tabular}{l|S|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    \multirow{2}{*}{12} & 1110.1 & a\\ % <-- Combining 2 rows with arbitrary with (*) and content 12
+    & 10.1 & b\\ % <-- Content of first column omitted.
+    \hline
+    3 & 23.113231 & c\\
+    4 & 25.113231 & d\\
+    \end{tabular}
+\end{center}
+\end{table}
+Multicolumn command has the same number of arguments and they are: NUMBER\_OF\_COLUMNS, ALIGNMENT, CONTENT.
+\begin{verbatim}
+\begin{table}[h!]
+\begin{center}
+    \caption{Multicolumn table.}
+    \label{tab:table4}
+    \begin{tabular}{l|S|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    \multicolumn{2}{c|}{12} & a\\ % <-- Combining two cells with alignment c| and content 12.
+    \hline
+    2 & 10.1 & b\\
+    3 & 23.113231 & c\\
+    4 & 25.113231 & d\\
+    \end{tabular}
+\end{center}
+\end{table}
+\end{verbatim}
+Which will render as:
+\begin{table}[h!]
+\begin{center}
+    \caption{Multicolumn table.}
+    \label{tab:table4}
+    \begin{tabular}{l|S|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    \multicolumn{2}{c|}{12} & a\\ % <-- Combining two cells with alignment c| and content 12.
+    \hline
+    2 & 10.1 & b\\
+    3 & 23.113231 & c\\
+    4 & 25.113231 & d\\
+    \end{tabular}
+\end{center}
+\end{table}
+Those two commands can be combained like this:
+\begin{verbatim}
+\begin{table}[h!]
+\begin{center}
+    \caption{Multirow and -column table.}
+    \label{tab:table5}
+    \begin{tabular}{l|S|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    \multicolumn{2}{c|}{\multirow{2}{*}{1234}} & a\\ % <-- Multicolumn spanning 2 columns, content multirow spanning two rows
+    \multicolumn{2}{c|}{} & b\\ % <-- Multicolumn spanning 2 columns with empty content as placeholder
+    \hline
+    3 & 23.113231 & c\\
+    4 & 25.113231 & d\\
+    \end{tabular}
+\end{center}
+\end{table}
+\end{verbatim}
+Which will look like:
+\begin{table}[h!]
+\begin{center}
+    \caption{Multirow and -column table.}
+    \label{tab:table5}
+    \begin{tabular}{l|S|r}
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta$ & $\gamma$ \\
+    \hline
+    \multicolumn{2}{c|}{\multirow{2}{*}{1234}} & a\\ % <-- Multicolumn spanning 2 columns, content multirow spanning two rows
+    \multicolumn{2}{c|}{} & b\\ % <-- Multicolumn spanning 2 columns with empty content as placeholder
+    \hline
+    3 & 23.113231 & c\\
+    4 & 25.113231 & d\\
+    \end{tabular}
+\end{center}
+\end{table}
+\LaTeX provides a way of inserting tables which are multiple pages long ("longtable" environment),
+in landscape mode ("sidewaystable" environment from "rotating" package) and even loading them
+from ".csv" ("pgfplotstable" package) however this is beyond the scope of this article.
 \section{Source code}
 When writing about programing it is necessary to include code snippets in document.
 To do this in \LaTeX we need to first include two packages:
