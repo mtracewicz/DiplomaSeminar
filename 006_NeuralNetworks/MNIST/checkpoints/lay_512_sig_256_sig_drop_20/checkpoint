@@ -1,0 +1,2 @@
+model_checkpoint_path: "lay_512_sig_256_sig_drop_20"
+all_model_checkpoint_paths: "lay_512_sig_256_sig_drop_20"
