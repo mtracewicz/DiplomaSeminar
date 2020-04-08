@@ -11,12 +11,12 @@ def create_model(learning_rate):
     model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
     model.add(tf.keras.layers.Dropout(rate=0.2))
 
-    model.add(tf.keras.layers.Conv2D(filters=32, kernel_size=2,
+    model.add(tf.keras.layers.Conv2D(filters=64, kernel_size=2,
                                      padding='same', activation='relu'))
     model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
     model.add(tf.keras.layers.Dropout(rate=0.2))
 
-    model.add(tf.keras.layers.Conv2D(filters=16, kernel_size=2,
+    model.add(tf.keras.layers.Conv2D(filters=32, kernel_size=2,
                                      padding='same', activation='relu'))
     model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
     model.add(tf.keras.layers.Dropout(rate=0.2))
