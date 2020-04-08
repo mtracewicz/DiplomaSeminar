@@ -144,4 +144,5 @@ dmypy.json
 #pdf
 *.pdf
 
+#downloadable images
 test_images/
