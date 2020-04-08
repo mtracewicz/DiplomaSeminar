@@ -143,3 +143,5 @@ dmypy.json
 
 #pdf
 *.pdf
+
+test_images/
