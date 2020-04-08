@@ -12,7 +12,7 @@ def create_model(learning_rate):
     model.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
     # Define the hidden layers.
     model.add(tf.keras.layers.Dense(units=512, activation='sigmoid'))
-    model.add(tf.keras.layers.Dense(units=256, activation='sigmoid'))
+    model.add(tf.keras.layers.Dense(units=250, activation='sigmoid'))
     # Define a dropout regularization layer.
     model.add(tf.keras.layers.Dropout(rate=0.2))
     # Output layer.
@@ -22,6 +22,15 @@ def create_model(learning_rate):
                   loss="sparse_categorical_crossentropy",
                   metrics=['accuracy'])
     return model
+
+
+def save_model(model):
+    # Saving compiled model weights
+    model.save_weights(f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}')
+    # and its topograpy
+    with open(f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}.json', "w") as file:
+        file.write(model.to_json())
+        file.flush()
 
 
 if __name__ == "__main__":
@@ -44,4 +53,4 @@ if __name__ == "__main__":
     # Evaluate against the test set.
     print("\n Evaluate the new model against the test set:")
     model.evaluate(x=x_test_normalized, y=y_test, batch_size=batch_size)
-    model.save_weights(f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}')
+    save_model(model)
