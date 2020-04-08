@@ -12,9 +12,9 @@ def create_model(learning_rate):
     model.add(tf.keras.layers.Flatten(input_shape=(28, 28)))
     # Define the hidden layers.
     model.add(tf.keras.layers.Dense(units=512, activation='sigmoid'))
-    model.add(tf.keras.layers.Dense(units=250, activation='sigmoid'))
+    model.add(tf.keras.layers.Dense(units=256, activation='sigmoid'))
     # Define a dropout regularization layer.
-    model.add(tf.keras.layers.Dropout(rate=0.2))
+    model.add(tf.keras.layers.Dropout(rate=0.22))
     # Output layer.
     model.add(tf.keras.layers.Dense(units=10, activation='softmax'))
 
