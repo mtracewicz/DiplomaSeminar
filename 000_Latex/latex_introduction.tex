@@ -46,9 +46,9 @@
 \pagenumbering{arabic}
 \section{What is \LaTeX?}
 \LaTeX is a markup language to typeset documents.
-It can be understood as a way to programaticly create documents.
+It can be understood as a way to programmatically create documents.
 \section{Compiling document}
-Document writen using \LaTeX need to be compiled before they are rendered into output file.
+Document written using \LaTeX need to be compiled before they are rendered into output file.
 First of user needs to install \LaTeX. In Ubuntu Linux this can be done with following commands:
 \begin{lstlisting}
     sudo apt install textlive
@@ -63,8 +63,8 @@ Afterwards this document should be compiled using following command:
 It will produce '.pdf' file in current directory.
 \section{Document structure}
 \subsection{Basic document structure}
-\LaTeX uses commands to do format, structureing document etc.
-For exaple:
+\LaTeX uses commands to do format, structuring document etc.
+For example:
 \begin{verbatim}
     \section{Name}
 \end{verbatim}
@@ -80,9 +80,9 @@ It begins with with:
 \begin{verbatim}
 \documentclass{article}
 \end{verbatim}
-All of \LaTeX comands starts with '\textbackslash'.
+All of \LaTeX commands starts with '\textbackslash'.
 First line of our document should be documentclass command.
-It determins how the whole document will be rendered. "article" is one of most common classes. Other notable
+It determines how the whole document will be rendered. "article" is one of most common classes. Other notable
 options are "book", "report", "slides", "beamer" (the last one is used to create presentations).
 Next we have:
 \begin{verbatim}
@@ -91,12 +91,12 @@ Next we have:
 \end{document}
 \end{verbatim}
 Here we create an environment. It is possible to create multiple environments in one document.
-They are parts of document to which certain typeseting rules applay.
+They are parts of document to which certain typesetting rules apply.
 Inside it author inserts content of theirs document.
 Everything which will be put between those two segments is called a "Preamble".
 Here user can point which packages will be used (more on this later), insert metadata from which
 document title page will be created. Things which are in preamble will not be directly rendered on document.
-For exaple lets take a look at part of this documents preamble:
+For example lets take a look at part of this documents preamble:
 \begin{verbatim}
 \documentclass[12pt]{article}
 \usepackage{listings}
@@ -139,7 +139,7 @@ To structure document one can use those commands:
     \subparagraph{Subparagraph name}
 \end{verbatim}
 \subsection{Packages}
-\LaTeX has a lot of both user created and built in packges.
+\LaTeX has a lot of both user created and built in packages.
 To find packages visit: \href{https://www.ctan.org/pkg}{ctan.org}
 User can download and remove packages by using:
 \begin{lstlisting}
@@ -155,7 +155,7 @@ This particular package provides way to do source code highlighting.
 It will be described in later section.
 \subsection{Table of contents}
 If user had used sections to structure theirs document \LaTeX provides a command to create table of contents
-based secotions, subsections,subsubsections.
+based sections, subsections,subsubsections.
 \begin{verbatim}
     \tableofcontents
 \end{verbatim}
@@ -177,7 +177,7 @@ This wil render as:
     \item Second
     \item Third
 \end{itemize}
-When working with unordered lists sometimes it is desierable to change item symbol.
+When working with unordered lists sometimes it is desireable to change item symbol.
 This can be done by:
 \begin{verbatim}
     \begin{itemize}
@@ -210,7 +210,7 @@ This will render as:
     \item Second
     \item Third
 \end{enumerate}
-Changeing enumeration can be done in two steps.
+Changing enumeration can be done in two steps.
 First user needs to add this to theirs preamble:
 \begin{verbatim}
     \usepackage{enumitem}
@@ -293,21 +293,21 @@ This will render as:
     \item Fifth
 \end{enumerate}
 \subsection{Footnotes}
-In \LaTeX there are is an easy way of creating and refering footnotes.
+In \LaTeX there are is an easy way of creating and referring footnotes.
 \begin{verbatim}
     Example \footnote{\label{myfootnote} Hello footnote}
-    Refering to footnote \ref{myfootnote}
+    Referring to footnote \ref{myfootnote}
 \end{verbatim}
 Which will render as:
 Example \footnote{\label{myfootnote} Hello footnote}
-Refering to footnote\ref{myfootnote}
-Footnotes are numbered automaticly.
+Referring to footnote\ref{myfootnote}
+Footnotes are numbered automatically.
 It is imperative, that the label is contained in footnote,
 otherwise the label will refer to section
 \section{Mathematics}
 \LaTeX is designed in a way which makes it easy to insert mathematical equations.
-There are two options how user can handle inputing maths into document.
-The first one is embeding the formula inline directly into the text.
+There are two options how user can handle inputting maths into document.
+The first one is embedding the formula inline directly into the text.
 This can be done using \$.
 For example:
 \begin{verbatim}
@@ -317,7 +317,7 @@ Which will render as:
 Exponential functions can look like this: $f(x) = 2^x$
 Second option includes creating new environment.
 Two main math environments are "equation" which is used to render one equation 
-(if user trys to enter more it will resault in compilation error)
+(if user try's to enter more it will result in compilation error)
 and "align" which is used to render multiple equations at the same time.
 Examples:
 \begin{verbatim}
@@ -331,7 +331,7 @@ Examples:
             3x &= 5 - 2
     \end{align*}
 \end{verbatim}
-This will be renddered as:
+This will be rendered as:
 \begin{equation*}
     f(x) = \frac{1}{x}
 \end{equation*}
@@ -340,8 +340,8 @@ This will be renddered as:
         3x &= 5 - 2
 \end{align*}
 Lets take a closer look at "align" environment.
-As its name sugests, it will align equations. This will happen at '\&' sign.
-Each equation needs to be separeted with "\textbackslash\textbackslash".
+As its name suggests, it will align equations. This will happen at '\&' sign.
+Each equation needs to be separated with "\textbackslash\textbackslash".
 Asterisk at the end of both environments are used to indicate that user doesn't want them to be numbered.
 \LaTeX is capable of displaying much more complicated equations some notable examples:
 \begin{verbatim}
@@ -406,12 +406,12 @@ c & d
 \end{matrix}
 \right]
 \end{verbatim}
-\textbackslash left[ and \textbackslash right] are responsible for creatinon of scaling braces around matrix.
+\textbackslash left[ and \textbackslash right] are responsible for creation of scaling braces around matrix.
 Then it is created using "matrix" environment, 
 new line character ("\textbackslash\textbackslash") is responsible for creating new row.
 \textbackslash int - integral symbol\\
 \textbackslash frac - fractions\\
-\textbackslash sqrt - squere root\\
+\textbackslash sqrt - square root\\
 "\textasciicircum\{a\}\_\{b\}" - is used to create indexes where "a" is top and "b" is bottom)\\
 \textbackslash dots - inserts "..."\\
 \textbackslash pi - inserts Pi symbol (any greek letter can be inserted in the same fashion)\\
@@ -439,12 +439,12 @@ Which will be rendered as:
     \caption{Coffee picture}
     \label{fig:coffee}
 \end{figure}
-Figure environment will take care of numberinga and positioning of image. To include image user needs to
+Figure environment will take care of numbering and positioning of image. To include image user needs to
 use \textbackslash includegraphics and pass a path to picture in curly braces. In this example width is set top
 0.4\textbackslash linewidth which means that picture will be scaled up/down to take 0.4 of document width.
-\textbackslash caption allows user to add visable caption to an image, \textbackslash label adds invisible label
-which can be helpfull if user wants to refer to this image later on.
-User can sugest or force how \LaTeX will position an image. It is done by putting one of following values into squere
+\textbackslash caption allows user to add visible caption to an image, \textbackslash label adds invisible label
+which can be helpful if user wants to refer to this image later on.
+User can suggest or force how \LaTeX will position an image. It is done by putting one of following values into squere
 brackets after \textbackslash begin{figure}:
 \begin{itemize}
     \item h (here) - same location
@@ -454,7 +454,7 @@ brackets after \textbackslash begin{figure}:
     \item ! (override) - will force the specified location
 \end{itemize}
 Sometimes there is the need to compare two images thankfully \LaTeX
-allows to do this preaty easly by using "subcaption" package.
+allows to do this pretty easily by using "subcaption" package.
 \begin{verbatim}
 \begin{figure}[h!]
     \centering
@@ -489,22 +489,22 @@ Which renders as:
     \label{fig:coffecomparison}
 \end{figure}
 \section{Bibliography}
-To automate createion of bibliography user needs to use external tools like:
+To automate creation of bibliography user needs to use external tools like:
 "Bibtex" or "Biblatex". To use BibTex we simply need to add :
 \begin{verbatim}
 \bibliography{bibliography_file}
 \bibliographystyle{ieeetr}
 \end{verbatim}
 just before \textbackslash end{document}.
-First comand is used to tell BibTex which file ".bib" file should it use and second one is
-responsible for seting style in which our bibliography will be displayed. ".bib" files can easly be created
+First command is used to tell BibTex which file ".bib" file should it use and second one is
+responsible for setting style in which our bibliography will be displayed. ".bib" files can easily be created
 with online editors. To use citation in our document we need to insert
 \begin{verbatim}
     \cite{WEBSITE:1}
 \end{verbatim} \cite{WEBSITE:1} as I did here. Most of the examples I used in this article are come from
 this site, some others come from \cite{WEBSITE:2} and the rest are either from \cite{WEBSITE:3}.
 Coffee image was taken from \cite{IMAGE:1}.
-If we add BibTex we need to change our compilation proces to:
+If we add BibTex we need to change our compilation process to:
 \begin{lstlisting}
     pdflatex [source file path]
     bibtex [source file path]
@@ -549,14 +549,14 @@ Which will render as:
 "table" environment is responsible for holding tables caption, label and its positioning on page.
 It works in the same way as with \ref{fig:coffee} on page~\pageref{fig:coffee}.
 "tabular" environment is used to create table itself. "\&" is used as column separator and "\textbackslash\textbackslash"
-is used as new row. Vertical lines are passed in squere brackets to "tabular" environment as "|" character.
-The letters which are next to them tell \LaTeX how to allign content in column:
+is used as new row. Vertical lines are passed in square brackets to "tabular" environment as "|" character.
+The letters which are next to them tell \LaTeX how to align content in column:
 \begin{itemize}
     \item l - left
     \item c - center
     \item r - right
 \end{itemize}
-Row separators can be added with \textbackslash hline. To align numbers according to deciaml point use
+Row separators can be added with \textbackslash hline. To align numbers according to decimal point use
 needs to include "siunitx" package and configure it. Example configuration looks something like this:
 \begin{verbatim}
 \usepackage{siunitx} 
@@ -657,7 +657,7 @@ Which will render as:
     \end{tabular}
 \end{center}
 \end{table}
-Those two commands can be combained like this:
+Those two commands can be combined like this:
 \begin{verbatim}
 \begin{table}[h!]
 \begin{center}
@@ -703,7 +703,7 @@ To do this in \LaTeX we need to first include two packages:
 \usepackage{listings}
 \usepackage{color}
 \end{verbatim}
-next step is to configure synatx highlighting:
+next step is to configure syntax highlighting:
 \begin{verbatim}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -727,8 +727,8 @@ next step is to configure synatx highlighting:
     tabsize=3
 }
 \end{verbatim}
-Above example sets up synatx highlighting for Python.
-Afterwards we can insert code by createing new environments:
+Above example sets up syntax highlighting for Python.
+Afterwards we can insert code by creating new environments:
 \begin{verbatim}
 % Here in "[]" user configures settings only for current listing
 \begin{lstlisting}[frame=tb,
@@ -778,12 +778,12 @@ print(f'Original array is:\n{a}')
 print(f'Transpose of the original array is:\n{a.T}')
 \end{lstlisting}
 \section{Drawing}
-In \LaTeX it is possible to plot functions and draw, to do so user needs to includee package "pgfplots".
+In \LaTeX it is possible to plot functions and draw, to do so user needs to include package "pgfplots".
 Package documentations: \href{https://mirrors.nic.cz/tex-archive/graphics/pgf/contrib/pgfplots/doc/pgfplots.pdf}{Pdfplots}
 Example code looks like this:
 \begin{verbatim}
 \usepackage{pgfplots}
-% code ommited for clarity ...
+% code omitted for clarity ...
 \begin{tikzpicture}
 \begin{axis}[
     xlabel=$x$,
