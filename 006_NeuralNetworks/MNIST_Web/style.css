@@ -1,0 +1,27 @@
+body {
+  background-color: #2e2e2e;
+  color: white;
+}
+
+.hero {
+  margin: 2.5em;
+  border-radius: 30px;
+}
+
+h1 {
+  font-size: 3.5em;
+  margin-top: 3%;
+  font-weight: bold;
+}
+
+.prediction {
+  background-color: #d3d0cb;
+  font-size: 2.5em;
+  border-radius: 30px;
+  padding: 5%;
+}
+
+
+.jumbotron {
+  background-color: #424b54;
+}
