@@ -38,7 +38,7 @@ def save_model(model):
     # Saving compiled model
     tf.keras.models.save_model(
         model, f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}')
-    # and its topograpy
+    # and its topography
     with open(f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}.json', "w") as file:
         file.write(model.to_json())
         file.flush()
