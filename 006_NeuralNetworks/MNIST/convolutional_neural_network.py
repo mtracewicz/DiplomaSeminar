@@ -1,18 +1,13 @@
 from hyperparameters import learning_rate, epochs, batch_size, validation_split
 import sys
 import tensorflow as tf
+import tensorflowjs as tfjs
 
 
 def create_model(learning_rate):
-    # Creating model
     model = tf.keras.models.Sequential()
-    model.add(tf.keras.layers.Conv2D(filters=64, kernel_size=2,
+    model.add(tf.keras.layers.Conv2D(filters=15, kernel_size=2,
                                      padding='same', activation='relu', input_shape=(28, 28, 1)))
-    model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
-    model.add(tf.keras.layers.Dropout(rate=0.2))
-
-    model.add(tf.keras.layers.Conv2D(filters=64, kernel_size=2,
-                                     padding='same', activation='relu'))
     model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
     model.add(tf.keras.layers.Dropout(rate=0.2))
 
@@ -21,11 +16,15 @@ def create_model(learning_rate):
     model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
     model.add(tf.keras.layers.Dropout(rate=0.2))
 
+    model.add(tf.keras.layers.Conv2D(filters=64, kernel_size=2,
+                                     padding='same', activation='relu'))
+    model.add(tf.keras.layers.MaxPooling2D(pool_size=2))
+    model.add(tf.keras.layers.Dropout(rate=0.2))
+
     model.add(tf.keras.layers.Flatten())
     model.add(tf.keras.layers.Dense(units=512, activation='sigmoid'))
-    # Define a dropout regularization layer.
     model.add(tf.keras.layers.Dropout(rate=0.2))
-    # Output layer.
+
     model.add(tf.keras.layers.Dense(units=10, activation='softmax'))
 
     model.compile(optimizer=tf.keras.optimizers.Adam(lr=learning_rate),
@@ -38,6 +37,9 @@ def save_model(model):
     # Saving compiled model
     tf.keras.models.save_model(
         model, f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}')
+    # Also for JS
+    tfjs.converters.save_keras_model(model, f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}_JS/')
+
     # and its topograpy
     with open(f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}.json', "w") as file:
         file.write(model.to_json())
