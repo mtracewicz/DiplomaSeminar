@@ -136,6 +136,7 @@ dmypy.json
 *.aux
 *.toc
 *.out
+*.fdb_latexmk
 
 #bibtex
 *.bbl
@@ -146,3 +147,4 @@ dmypy.json
 
 #downloadable images
 test_images/
+
