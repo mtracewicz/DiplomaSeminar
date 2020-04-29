@@ -142,9 +142,6 @@ dmypy.json
 *.bbl
 *.blg
 
-#pdf
-*.pdf
-
 #downloadable images
 test_images/
 
