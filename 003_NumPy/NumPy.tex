@@ -40,7 +40,7 @@ It provides a high-performance multidimensional array object, and tools for work
 \subsection{Introduction}
 In NumPy the main way of representing data are multi dimensional arrays.
 The are represented by ndarray class. It represents table of elements (all of which are of the same type).
-Those arrays are indexed by tuples of positive integeres
+Those arrays are indexed by tuples of positive integers
 Number of dimensions for given array is called rank.
 Tuple of integers representing size of array along each dimension is called shape.
 \subsection{Creating arrays}
@@ -80,14 +80,14 @@ arr = np.linspace(2, 10, 5)
 print("\nArray created using "
         "linspace:\n", arr)
 
-# Creating an array filled random numbers (max numebr is 9, because it will generate numebrs lower then given n))
+# Creating an array filled random numbers (max number is 9, because it will generate numbers lower then given n))
 np.random.seed(0)
 arr = np.random.randint(10, size = 6)
 print("\nArray created using "
         "random:\n", arr)
 \end{lstlisting}
 \subsection{Accessing elements of arrays}
-Elements of those arrays are accesed using square brackes.
+Elements of those arrays are accessed using square brackets.
 When using ndarrays one can also use slices.
 \begin{lstlisting}
 import numpy as np
@@ -115,7 +115,7 @@ print ("\nElements at indices (1, 3), "
 
 x = np.array([[1, 2], [3, 4], [5, 6]])
 y = x[[0,1,2], [0,1,0]] 
-# First array contains indexes in first dimension, second array contains indexes in second dimsenision and so on
+# First array contains indexes in first dimension, second array contains indexes in second dimension and so on
 # This means that example above gives use elements at indexes (0,0),(1,1),(2,0)
 print(y)
 
@@ -135,7 +135,7 @@ print(f'Original array is:\n{a}')
 print(f'Transpose of the original array is:\n{a.T}')
 
 # Both this and next for will print the same output as iteration
-# is done according to how array is storred in memory
+# is done according to how array is stored in memory
 for x in np.nditer(a):
         print(f"{x} ")
 
@@ -154,7 +154,7 @@ print(f'Modified array is:\n{a}')
 \subsection{Data types}
 Every ndarray has associated data type, known as dtype.
 It provides information about arrays layout.
-This example should ilustrate how NumPy tries to guess data 
+This example should illustrate how NumPy tries to guess data 
 and how user can force it to use particular one.
 \begin{lstlisting}
 import numpy as np
@@ -174,7 +174,7 @@ x = np.array([1, 2], dtype = np.int64)
 print("\nForcing a Datatype: ",x.dtype)
 \end{lstlisting}
 \section{Operations}
-NumPy provides a set of usefull buildin functions.
+NumPy provides a set of usefully builtin functions.
 
 \begin{lstlisting}
 import numpy as np
@@ -202,17 +202,17 @@ print ("\nSum of all array "
 # Performing Binary operations
 print ("\nArray sum:\n", a + b)
 
-# Muliplying two arrays
+# Multiplying two arrays
 print ("\nArray sum:\n", a * b)
 
-# Gettig dot product
+# Getting dot product
 print ("\nArray sum:\n", a @ b)
 
 # Transposition
 print ("\nMatrix transposition:\n", a,a.T)
 
 # Broadcasting
-# In some situations NumPy can help use perform operations which would normaly be imposible.
+# In some situations NumPy can help use perform operations which would normally be impossible.
 # When arrays are not of the same rank, NumPy can sometimes expand smaller one to allow the operation.
 # This expansion is called broadcasting.
 # In this example array b will be broadcasted to match array a
