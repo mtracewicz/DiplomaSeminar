@@ -5,26 +5,25 @@ importScripts(
 onmessage = async function predict(e) {
   tf.setBackend("cpu");
   const input = preprocessImage(e.data);
+  console.log(await input.data())
   const model = await tf.loadLayersModel("model/model.json");
-  predictOut = model.predict(input);
-  let predictionArray = await predictOut.data();
-  let prediction = 0,
-    index = 0,
-    max = 0;
-  predictionArray.forEach((i) => {
-    if (i > max) {
-      max = i;
-      prediction = index;
-    }
-    index++;
-  });
-  this.console.log(predictionArray)
-  postMessage(prediction);
-  predictOut.dispose();
+  const predictionArray = await model.predict(input).data();
+  postMessage(getPredictionFromArray(predictionArray));
 };
 
 function preprocessImage(image) {
-  let image2 = new Uint8Array(28 * 28);
-  image2.set(image);
-  return tf.tensor(image2).reshape([1, 28, 28, 1]).toFloat();
+  return tf.browser
+    .fromPixels({ data: image, width: 28, height: 28 }, 1)
+    .asType("float32")
+    .reshape([1, 28, 28, 1]);
+}
+
+function getPredictionFromArray(predictionArray) {
+  let max = 0;
+  predictionArray.forEach((item) => {
+    if (item > max) {
+      max = item;
+    }
+  });
+  return predictionArray.indexOf(max);
 }
