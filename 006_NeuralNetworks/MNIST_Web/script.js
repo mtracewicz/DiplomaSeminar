@@ -47,16 +47,15 @@ function getFileName() {
 const btn = document.getElementById("predict");
 btn.addEventListener("click", () => {
   const reader = new FileReader();
-  reader.onload = (e) => {
-    let img_buff = e.target.result;
-    img_buff = new Uint8Array(img_buff)
+  reader.onloadend = (e) => {
+    const img_buff = new Uint8Array(e.target.result)
     worker.postMessage(img_buff);
   };
   reader.readAsArrayBuffer(getSelectedFile());
 });
 
 // Display prediction received from WebWorker
-onmessage = function displayPrediction(e) {
+worker.onmessage = function displayPrediction(e) {
   const label = document.getElementById("prediction");
-  label.innerText = e.data;
+  label.innerText = `Your number is: ${e.data}`;
 };
