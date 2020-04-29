@@ -13,6 +13,15 @@
   <body>
     <h1 class="text-center">MNIST<br />Example model</h1>
     <div class="jumbotron hero">
+      <div class="container">
+        <div class="row" id="mrow">
+          <div class="col">
+            <p id="prediction" class="text-center">
+              Your prediction will appear here.
+            </p>
+          </div>
+        </div>
+      </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroupFileAddon01"
@@ -24,6 +33,7 @@
             type="file"
             class="custom-file-input"
             id="inputGroupFile01"
+            accept="bmp"
             aria-describedby="inputGroupFileAddon01"
           />
           <label
@@ -37,9 +47,6 @@
       <button id="predict" disabled="true" class="btn-success text-center">
         Predict!
       </button>
-      <p id="prediction" class="prediction text-center">
-        Your prediction will appear here.
-      </p>
     </div>
     <script src="script.js"></script>
   </body>
