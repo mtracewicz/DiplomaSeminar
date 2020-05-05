@@ -29,6 +29,11 @@ function displayImage(img_url) {
   }
 }
 
+function getPredictionImageData() {
+  const img = document.getElementById("predictionImage");
+  return createImageBitmap(img);
+}
+
 function createImage(img_url) {
   const row = document.getElementById("mrow");
   const img = document.createElement("img");
@@ -46,12 +51,14 @@ function getFileName() {
 
 const btn = document.getElementById("predict");
 btn.addEventListener("click", () => {
-  const reader = new FileReader();
-  reader.onloadend = (e) => {
-    const img_buff = new Uint8Array(e.target.result)
-    worker.postMessage(img_buff);
-  };
-  reader.readAsArrayBuffer(getSelectedFile());
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  getPredictionImageData().then((value) => {
+    const image = value;
+    ctx.drawImage(image, 0, 0);
+    let img_data = ctx.getImageData(0, 0, image.width, image.height).data;
+    worker.postMessage(img_data);
+  });
 });
 
 // Display prediction received from WebWorker
