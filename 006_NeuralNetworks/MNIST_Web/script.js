@@ -45,8 +45,8 @@ function loadImage(){
 }
 
 // Returns file selected by user
-function getSelectedFile{
-  document.getElementById("inputGroupFile01").files[0];
+function getSelectedFile(){
+  return document.getElementById("inputGroupFile01").files[0];
 }
 
 // Display image selected by user
