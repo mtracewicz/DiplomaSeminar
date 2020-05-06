@@ -1,7 +1,9 @@
+// Import Tensorflow JS
 importScripts(
   "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2.7/dist/tf.min.js"
 );
 
+// Make prediction and send back answer
 onmessage = async function predict(e) {
   tf.setBackend("cpu");
   const input = preprocessImage(e.data);
@@ -10,26 +12,37 @@ onmessage = async function predict(e) {
   postMessage(getPredictionFromArray(predictionArray));
 };
 
+// Prepare data to fit model input
 function preprocessImage(image) {
-  let data = new Float32Array(image);
-  data = data.map(i => i/255.0);
-  let processed_data = new Float32Array(data.length/4);
-  for(let i = 0;i<processed_data.length;i++){
-    if(data[4*i] != 0 || data[1+4*i] != 0 || data[2+4*i] != 0){
-      processed_data[i] = 1;
-    }
-  }
-  return tf.tensor(processed_data)
-    .asType("float32")
-    .reshape([1, 28, 28, 1]);
+  const scaledData = scaleData(image);
+  const preprocessedData = makeMonochrome(scaledData);
+  return tf.tensor(preprocessedData).asType("float32").reshape([1, 28, 28, 1]);
 }
 
-function getPredictionFromArray(predictionArray) {
-  let max = 0;
-  predictionArray.forEach((item) => {
-    if (item > max) {
-      max = item;
+// Scale data from integers [0,255] to floats [0.0,1.0]
+function scaleData(data) {
+  return new Float32Array(data).map((i) => i / 255.0);
+}
+
+// Get monochrome version from RGBA
+function makeMonochrome(inputData) {
+  let processed_data = new Float32Array(inputData.length / 4);
+  for (let x = 0; x < 28; x++) {
+    for (let y = 0; y < 28; y++) {
+      /* We can assign red color from input data to processed data,
+      because as the pictures are monochrome in their nature values of 
+      red,green,blue are always the same.
+      */
+      processed_data[x + y * 28] = inputData[4 * (x + y * 28)];
     }
-  });
+  }
+  return processed_data;
+}
+
+// Get class with highest probability
+function getPredictionFromArray(predictionArray) {
+  const max = predictionArray.reduce((current_max_value, item_value) => {
+    return item_value > current_max_value ? item_value : current_max_value;
+  }, 0);
   return predictionArray.indexOf(max);
 }
