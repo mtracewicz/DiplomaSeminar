@@ -13,5 +13,5 @@ number_of_images = int(argv[1]) if len(argv) == 2 else 10
 random.seed(time.time)
 with ChargingBar("Downloading", max=number_of_images) as bar:
     for i in range(number_of_images):
-        save_img(f'./test_images/test{i}.jpg', data[random.randint(0, 10000)])
+        save_img(f'./test_images/test{i+1}.jpg', data[random.randint(0, 10000)])
         bar.next()
