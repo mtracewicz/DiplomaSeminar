@@ -4,7 +4,7 @@ body {
 }
 
 .hero {
-  margin: 0 2.5em 2.5em 2.5em;
+  margin: 2.5em;
   border-radius: 30px;
 }
 
@@ -39,7 +39,7 @@ h1 {
   background-color: #424b54;
 }
 
-#predictionImage{
+#predictionImage {
   width: 13%;
   padding-bottom: 15;
   display: block;
