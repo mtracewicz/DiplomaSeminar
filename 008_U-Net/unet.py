@@ -62,7 +62,7 @@ def create_model(learning_rate):
 
     model.add(tf.keras.layers.UpSampling2D())
     model.add(tf.keras.layers.Conv2D(
-        filters=64,
+        filters=32,
         kernel_size=3,
         use_bias=True,
         padding='same',
@@ -72,7 +72,7 @@ def create_model(learning_rate):
 
     model.add(tf.keras.layers.UpSampling2D())
     model.add(tf.keras.layers.Conv2D(
-        filters=64,
+        filters=16,
         kernel_size=3,
         use_bias=True,
         padding='same',
@@ -82,7 +82,7 @@ def create_model(learning_rate):
 
     # Flatenning
     model.add(tf.keras.layers.Conv2D(
-        filters=16,
+        filters=1,
         kernel_size=3,
         use_bias=True,
         padding='same',
@@ -122,7 +122,7 @@ if __name__ == "__main__":
         img = Image.open(f"{IMAGES_DIRECTORY}/{filename}")
         x_train[i] = np.array(img)
 
-    y_train = np.copy((255.0 - (x_train/255.0)).reshape(x_train.shape[0], 1200, 1600, 3))
+    y_train = np.copy((255.0 - x_train)/255.0).reshape(x_train.shape[0], 1200, 1600, 3)
     # Data normalization from [0,255] to [0.0,1.0]
     # and reshaping it for proper dimensions
     x_train_normalized = (x_train/255.0).reshape(x_train.shape[0], 1200, 1600, 3)
@@ -137,7 +137,7 @@ if __name__ == "__main__":
         shuffle=True,
         validation_split=validation_split
     )
-    res = Image(model.predict(x_train_normalized[0]))
+    res = Image.fromarray(((model.predict(x_train_normalized[0]))[0] * 255).astype(np.uint8))
     res.save("res.jpeg")
 
     # Evaluate against the test set.
