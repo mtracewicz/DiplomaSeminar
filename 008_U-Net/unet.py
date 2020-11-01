@@ -27,7 +27,8 @@ if __name__ == "__main__":
     x_train_normalized = (x_train/255.0).reshape(x_train.shape[0], 1200, 1600, 3)
     # Prepare grand truth
     y_train = np.copy((255.0 - x_train)/255.0).reshape(x_train.shape[0], 1200, 1600, 3)
-
+    
+    tf.keras.backend.set_floatx('float64')
     # Establish the model's topography.
     model = create_model(x_train)
     # Train the model on the normalized training set.
