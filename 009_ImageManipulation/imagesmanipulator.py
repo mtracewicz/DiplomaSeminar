@@ -1,5 +1,5 @@
 import os
-from imagespliter import ImageSplitter
+from imagesplitter import ImageSplitter
 
 if __name__ == "__main__":
     splitter = ImageSplitter()
