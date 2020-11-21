@@ -147,3 +147,5 @@ dmypy.json
 #downloadable images
 test_images/
 /008_U-Net/Img
+/009_ImageManipulation/Img
+/009_ImageManipulation/split

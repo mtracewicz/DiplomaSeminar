@@ -1,5 +1,5 @@
 Keras >= 2.3.0
-numpy >= 1.18.0
+numpy == 1.17.0
 pandas >= 1.0.0
 Pillow >= 7.0.0
 progress >= 1.5
