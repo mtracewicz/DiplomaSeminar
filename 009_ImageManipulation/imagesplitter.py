@@ -16,12 +16,12 @@ class ImageSplitter():
         img = np.array(Image.open(f'Img/{image_path}'))
         number_of_moves_horizontally = int(self._image_width/(self._new_image_size-self._pocket))
         number_of_moves_vertically = int(self._image_height/(self._new_image_size-self._pocket))
-        for i in range(number_of_moves_horizontally):
-            for j in range(number_of_moves_vertically):
+        for j in range(number_of_moves_vertically):
+            for i in range(number_of_moves_horizontally):
                 horizontal_start = i*(self._new_image_size - self._pocket)
                 vertical_start = j*(self._new_image_size - self._pocket)
                 tmp_img = Image.fromarray(np.copy(img[vertical_start:vertical_start+self._new_image_size,horizontal_start:horizontal_start+self._new_image_size]))
-                tmp_img.save(f"split/{ImageSplitter.it}_{'0' if i < 10 else ''}{i}_{'0' if j < 10 else ''}{j}_tmp.jpg")
+                tmp_img.save(f"split/{ImageSplitter.it}_{'0' if j < 10 else ''}{j}_{'0' if i < 10 else ''}{i}_tmp.jpg")
         ImageSplitter.it+=1
 
     def _make_sure_directory_exists(self):
