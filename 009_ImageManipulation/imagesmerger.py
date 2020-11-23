@@ -2,14 +2,24 @@ import os
 import numpy as np
 from PIL import Image
 
-class ImagesMerger():
+class ImageMerger():
     def __init__(self, src_directory, out_directory):
+        self._src_directory = src_directory
         self._image_names = os.listdir(src_directory)
         self._image_names.sort()
-        tmp = list(dict.fromkeys([img[0] for img in self._image_names]))
-        self.number_of_images_to_create = len(tmp)
         self._out_directory = out_directory
 
-    def merge():
-        for i,val in enumerate(self._image_names):
-            
+    def merge(self, fileprefix):
+        tmp = np.zeros((1200,1600,3))
+        images = { val for val in self._image_names if val.startswith(fileprefix)}
+        for img in images:
+            split = img.split('_')
+            start_row = 90*int(split[1]) - 10*int(split[1])
+            start_column = 90*int(split[2]) - 10*int(split[2])
+            end_row = start_row+90
+            end_column = start_column+90
+            tmp[start_row:end_row,start_column:end_column] = np.array(Image.open(f'{self._src_directory}/{img}'))
+
+        tmp = tmp.astype('uint8')
+        img = Image.fromarray(tmp)
+        img.save(f'{self._out_directory}/{fileprefix}.jpg')
