@@ -8,7 +8,19 @@ Aby to osiągnąć posłużyłem się takzwanymi webworker-ami. Pozwalają one n
 
 Dzięki powyrzszemu rozwiązaniu jesteśmy w stanie uruchmić nasz model postronie klienta w przeglądarce. Dodatkowo zapewniona jest płynność działania ponieważ procesowanie danych oraz predykcja modelu wykonywane są równolegle do wątku głównego, który obsługuje interfejs użytkownika.
 
-# 2. Zbyt duża wielkość obrazów wejsciowych oraz mała ilość danych uczących 
+# 2. Dobór architektury sieci
+
+W celu efektywnej i skutecznej realizacji postawionego przezemnie zadania musiałem wybrać odpowiednią architekturę sieci neuronowej. W tym celu zapoznałem się z zadaniami zwykle stawianymi przed sztucznymi sieciami neuronowymi. Są to:
+
+* Klasfikacja - przypisanie obiektu do klasy np. jaki numer znajduje się na obrazku -dla odręcznie napisaej cyfry
+* Predykcja - wytworzenie oczekiwanej wartości na podstwie danych np. przewidywanie cen mieszkania na podstawie jego parametrów
+* Klastrowanie - sieć przeczesuje dane bez etykietek i próbuje połączyć je w grupy w których będą one w jakiś sposób powiązane ze sobą 
+* Kojarzenie - sieć zapamiętuję jakieś wzory a następnie gdy widzi nowy przypisuje mu najbardziej zbliżony z zapamiętanych
+* Segmentacja - na obrazie znajdujemy klasy obiektów i tworzymy nowy obraz gdzie, np. ze zdjęć drogi tworzymy obraz na któym piksele na ktorych widać znak drogowy mają kolor zielony a te zawierjące przejście dla pieszych czerwony a pozostałe jako nie istotne kolor czarny
+
+Moje zadanie zdecydowanie zalicza się do kategorii segmentacji. Dowiedziałaem się, że wsystuacjach w ,których w jakiś sposób przetwarzane są zdjęcia/obrazy najczęstszym i najskuteczniejszym podejśćiem jest wykorzystanie sieci splotowych. Są to sieci, które zawierają przynajmniej jedną warstwę splotową, warstwa ta polega na zastosowaniu na obrazie filtrów i utworzenie z niego kilku zniekształconych obrazów. Filtry takie mogą specjalizować się np. w wynajdowaniu na zdjęciach krawędzi przedmiotów i ich zaznaczeniu. Operacja ta jest kosztowna pod względem pamięci jednak jest bardzo szybkow obliczalna na karcie graficznej, która projektowana jest m.in. z założeniem szybkiego nakładania filtrów na obraz. Następnie zacząłem poszukiwania typowych architektur sieci splotowych wykorzystywanych w problemie segmentacji. W trakcie poszukiwań natknąłem się na architekturę `u-net`, która znalazła swoje zastosowanie w szeroko pojętej segmentacji obrazów medycznych.
+
+# 3. Zbyt duża wielkość obrazów wejsciowych oraz mała ilość danych uczących 
 
 Przy rozwiązywaniu postawionego przedemną problemu natkąłem się na dwa problemy, które miały to samo rozwiązanie. Pierwszym z nich była wielkość obrazów wejściowych, która przy wybranej przezemnie architekturze sieci (u-net) była zdecydowanie zbyt duża. Natomiast drugim był niedobór danych uczących. Doszedłem do wniosku, że oba te problemy mogę rozwiązać poprzez pocięcie dużych obrazów wejściowych (1200x1600px) na wiele mniejszych (90x90px z zakładką wynoszącą 10px), a następnie uczenie na nich modelu. Gdy model będzie już wyuczony w celu otrzymania segmentacji obraz wejściowy będzie najpierw dzielony w ten sam sposób, aby był zestawem mniejszych zdjęć, potem nastąpi segmentacja a po niej wyniki zostaną scalone ponownie w jeden obraz wyjściowy (w miejscach, gdzie będzie więcej niż jedna odpowiedź dla piksela z powodu kieszonki przyjmę wartość maksymalną).  Dzięki takiemu rozwiązaniu udało mi się znacząco zmniejszyć ilość pamięci operacyjnej wymaganej dla pojedyńczego przebiegu sieci,  dzięki czemu mogę wykorzystać architekturę u-net oraz znacząco zwiększyć jej skuteczność, ponieważ dostępną pamięć można wykorzystać by dołóżyć dodatkowe warstwy/filtry. Dodatkowo rozmiar 90x90px jest obrazem kwadratowym a ztakimi najlepiej radzi sobię ta architektura. Kolejnym plusem jest to, że w ten sposób ilość moich danych wejściowych  drastycznie wzrośnie, ponieważ z każdego jednego obrazu utworzy się trzysta mniejszych, z któych każdy będzie odzielny/niezależnym przykładem uczącym (w tym wypadku obraz orginalny składa się na siatkę o szerokości 20 i wysokości 15 mniejszych obrazów). 
 
