@@ -6,7 +6,7 @@ import tensorflow as tf
 from PIL import Image
 
 from hyperparameters import batch_size, epochs, learning_rate, validation_split
-from model import create_model,save_model
+from model import create_model2,save_model,myModel
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -26,11 +26,13 @@ if __name__ == "__main__":
     # and reshaping it for proper dimensions
     x_train_normalized = (x_train/255.0).reshape(x_train.shape[0], 1200, 1600, 3)
     # Prepare grand truth
-    y_train = np.copy((255.0 - x_train)/255.0).reshape(x_train.shape[0], 1200, 1600, 3)
-    
+    y_train = ((255.0-np.copy(x_train)/255.0).reshape(x_train.shape[0], 1200, 1600, 3))
+
     tf.keras.backend.set_floatx('float64')
     # Establish the model's topography.
-    model = create_model(x_train)
+    # model = myModel(x_train_normalized)
+    # model.compile(optimizer='Adam', loss="binary_crossentropy", metrics=["accuracy"])
+    model = create_model2(x_train_normalized)
     # Train the model on the normalized training set.
     model.fit(
         x=x_train_normalized,
@@ -41,5 +43,6 @@ if __name__ == "__main__":
     )
     # Save model
     save_model(model,sys.argv[1])
-
+    res = Image.fromarray(((model.predict(np.array(Image.open(f'{os.getcwd()}/008_U-Net/Img/przyp. 1 STAT 3 pow 40x.JPG.JPG'))*255))).astype(np.uint8))
+    res.save("res.jpeg")
     print('Finished!')
