@@ -30,17 +30,9 @@ if __name__ == "__main__":
 
     tf.keras.backend.set_floatx('float64')
     # Establish the model's topography.
-    # model = myModel(x_train_normalized)
-    # model.compile(optimizer='Adam', loss="binary_crossentropy", metrics=["accuracy"])
-    model = create_model2(x_train_normalized)
-    # Train the model on the normalized training set.
-    model.fit(
-        x=x_train_normalized,
-        y=y_train,
-        batch_size=batch_size,
-        epochs=epochs,
-        shuffle=True
-    )
+    model = myModel(x_train_normalized)
+    model.compile(optimizer='Adam', loss="binary_crossentropy", metrics=["accuracy"])
+
     # Save model
     save_model(model,sys.argv[1])
     res = Image.fromarray(((model.predict(np.array(Image.open(f'{os.getcwd()}/008_U-Net/Img/przyp. 1 STAT 3 pow 40x.JPG.JPG'))*255))).astype(np.uint8))

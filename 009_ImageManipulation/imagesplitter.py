@@ -15,8 +15,8 @@ class ImageSplitter():
 
     def split_into_images(self, image_name):
         img = np.array(Image.open(f'{self._src_directory}/{image_name}'))
-        number_of_moves_horizontally = int(self._image_width/(self._new_image_size-self._pocket))
-        number_of_moves_vertically = int(self._image_height/(self._new_image_size-self._pocket))
+        number_of_moves_horizontally = int(self._image_width/(self._new_image_size-self._pocket)) -1
+        number_of_moves_vertically = int(self._image_height/(self._new_image_size-self._pocket)) - 1
         for j in range(number_of_moves_vertically):
             for i in range(number_of_moves_horizontally):
                 horizontal_start = i*(self._new_image_size - self._pocket)
