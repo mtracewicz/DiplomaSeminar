@@ -14,10 +14,10 @@ class ImageMerger():
         images = { val for val in self._image_names if val.startswith(fileprefix)}
         for img in images:
             split = img.split('_')
-            start_row = 90*int(split[1]) - 10*int(split[1])
-            start_column = 90*int(split[2]) - 10*int(split[2])
-            end_row = start_row+90
-            end_column = start_column+90
+            start_row = 200*int(split[1]) - 100*int(split[1])
+            start_column = 200*int(split[2]) - 100*int(split[2])
+            end_row = start_row+200
+            end_column = start_column+200
             tmp[start_row:end_row,start_column:end_column] = np.array(Image.open(f'{self._src_directory}/{img}'))
 
         tmp = tmp.astype('uint8')

@@ -8,8 +8,8 @@ class ImageSplitter():
     def __init__(self,src_directory,out_directory):
         self._image_width = 1600
         self._image_height = 1200
-        self._new_image_size = 90
-        self._pocket = 10
+        self._new_image_size = 200
+        self._pocket = 100
         self._src_directory = src_directory
         self._out_directory = out_directory
 
