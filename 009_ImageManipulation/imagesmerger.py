@@ -10,7 +10,7 @@ class ImageMerger():
         self._out_directory = out_directory
 
     def merge(self, fileprefix):
-        tmp = np.zeros((1200,1600,3))
+        tmp = np.zeros((1200,1600,4))
         images = { val for val in self._image_names if val.startswith(fileprefix)}
         for img in images:
             split = img.split('_')
@@ -22,4 +22,4 @@ class ImageMerger():
 
         tmp = tmp.astype('uint8')
         img = Image.fromarray(tmp)
-        img.save(f'{self._out_directory}/{fileprefix}.jpg')
+        img.save(f'{self._out_directory}/{fileprefix}.png')

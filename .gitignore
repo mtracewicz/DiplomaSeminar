@@ -150,4 +150,6 @@ test_images/
 /009_ImageManipulation/_in
 /009_ImageManipulation/_tmp
 /009_ImageManipulation/_out
-
+/009_ImageManipulation/_Sliced/
+/009_ImageManipulation/_groundtruth/
+/009_ImageManipulation/_merged/
