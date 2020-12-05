@@ -22,6 +22,6 @@ class ImageSplitter():
                 horizontal_start = i*(self._new_image_size - self._pocket)
                 vertical_start = j*(self._new_image_size - self._pocket)
                 tmp_img = Image.fromarray(np.copy(img[vertical_start:vertical_start+self._new_image_size,horizontal_start:horizontal_start+self._new_image_size]))
-                tmp_img.save(f"{self._out_directory}/{ImageSplitter.it}_{'0' if j < 10 else ''}{j}_{'0' if i < 10 else ''}{i}_tmp.png")
+                tmp_img.save(f"{self._out_directory}/{ImageSplitter.it}_{'0' if j < 10 else ''}{j}_{'0' if i < 10 else ''}{i}.png")
         ImageSplitter.it+=1
 
