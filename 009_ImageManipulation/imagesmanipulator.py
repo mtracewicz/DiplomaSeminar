@@ -1,6 +1,6 @@
 import os
 import sys
-from imagesplitter import ImageSplitter
+from imagessplitter import ImageSplitter
 from imagesmerger import ImageMerger
 
 def make_sure_directory_exists(dir_names):
