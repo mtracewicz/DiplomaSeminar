@@ -16,6 +16,7 @@ def get_model(inputs):
     n_filters=2
     dropout=0.5
     batchnorm=True
+
     # contracting path
     c1 = conv2d_block(inputs, n_filters=n_filters*1, kernel_size=3, batchnorm=batchnorm)
     p1 = tf.keras.layers.MaxPooling2D((2, 2))(c1)
@@ -56,6 +57,7 @@ def get_model(inputs):
     u9 = tf.keras.layers.Dropout(dropout)(u9)
     c9 = conv2d_block(u9, n_filters=n_filters*1, kernel_size=3, batchnorm=batchnorm)
     outputs = tf.keras.layers.Conv2D(1, (1, 1), activation='sigmoid') (c9)
+
     return tf.keras.model(inputs=input, outputs=output)
 
 def save_model(model, checkpoint_name, to_json=True):
