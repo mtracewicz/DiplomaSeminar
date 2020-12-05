@@ -2,6 +2,7 @@ import os
 import sys
 from imagessplitter import ImageSplitter
 from imagesmerger import ImageMerger
+from progress.bar import ChargingBar as cb
 
 def make_sure_directory_exists(dir_names):
     for dir_name in dir_names:
@@ -25,9 +26,13 @@ if __name__ == "__main__":
     splitter = ImageSplitter(src_dir,tmp_dir)
     images = os.listdir(src_dir)
     images.sort()
-    for img in images:
-        splitter.split_into_images(img)
+    with cb("Splitting", max=len(images)) as bar:
+        for img in images:
+            splitter.split_into_images(img)
+            bar.next()
 
     merger = ImageMerger(tmp_dir,out_dir)
-    for i in range(len(images)):
-        merger.merge(str(i))
+    with cb("Splitting", max=len(images)) as bar:
+        for i in range(len(images)):
+            merger.merge(str(i))
+            bar.next()
