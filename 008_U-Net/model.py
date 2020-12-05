@@ -20,6 +20,7 @@ def get_model(inputs):
     c1 = conv2d_block(inputs, n_filters=n_filters*1, kernel_size=3, batchnorm=batchnorm)
     p1 = tf.keras.layers.MaxPooling2D((2, 2))(c1)
     p1 = tf.keras.layers.Dropout(dropout*0.5)(p1)
+
     c2 = conv2d_block(p1, n_filters=n_filters*2, kernel_size=3, batchnorm=batchnorm)
     p2 = tf.keras.layers.MaxPooling2D((2, 2)) (c2)
     p2 = tf.keras.layers.Dropout(dropout)(p2)
@@ -28,7 +29,6 @@ def get_model(inputs):
     p3 = tf.keras.layers.MaxPooling2D((2, 2)) (c3)
     p3 = tf.keras.layers.Dropout(dropout)(p3)
 
-    c5 = conv2d_block(p1, n_filters=n_filters*2, kernel_size=3, batchnorm=batchnorm)
     c4 = conv2d_block(p3, n_filters=n_filters*8, kernel_size=3, batchnorm=batchnorm)
     p4 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2)) (c4)
     p4 = tf.keras.layers.Dropout(dropout)(p4)
@@ -44,8 +44,8 @@ def get_model(inputs):
     u7 = tf.keras.layers.Conv2DTranspose(n_filters*4, (3, 3), strides=(2, 2), padding='same') (c6)
     u7 = tf.keras.layers.concatenate([u7, c3])
     u7 = tf.keras.layers.Dropout(dropout)(u7)
-
     c7 = conv2d_block(u7, n_filters=n_filters*4, kernel_size=3, batchnorm=batchnorm)
+
     u8 = tf.keras.layers.Conv2DTranspose(n_filters*2, (3, 3), strides=(2, 2), padding='same') (c7)
     u8 = tf.keras.layers.concatenate([u8, c2])
     u8 = tf.keras.layers.Dropout(dropout)(u8)

@@ -10,10 +10,9 @@ from model import get_model, save_model
 
 def load_images(dir: str) -> np.array:
     IMAGES_DIRECTORY= os.path.join(os.getcwd(), dir)
-    print(IMAGES_DIRECTORY)
     filenames = os.listdir(IMAGES_DIRECTORY)
     number_of_images = len(filenames)
-    images = np.ones((number_of_images,200,200,4))
+    images = np.ones((number_of_images,200,200, 3 if dir == '_in' else 4))
     for i, filename in enumerate(filenames):
         img = Image.open(f"{IMAGES_DIRECTORY}/{filename}")
         images[i] = np.array(img)
@@ -22,7 +21,7 @@ def load_images(dir: str) -> np.array:
 
 if __name__ == "__main__":
     if len(sys.argv) != 4:
-        print("Usage: python unet.py inputs_directory truths_directory checkpint_name")
+        print("Usage: python unet.py inputs_directory truths_directory checkpoint_name")
         exit()
 
     #Loading data
@@ -31,7 +30,7 @@ if __name__ == "__main__":
 
     # Data normalization from [0,255] to [0.0,1.0]
     # and reshaping it for proper dimensions
-    x_train= (x_train/255.0).reshape(x_train.shape[0], 200, 200, 4)
+    x_train= (x_train/255.0).reshape(x_train.shape[0], 200, 200, 3)
     y_train= (y_train/255.0).reshape(y_train.shape[0], 200, 200, 4)
 
     # Seting tf floating point operations to 64 use bits
