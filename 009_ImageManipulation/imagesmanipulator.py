@@ -32,7 +32,7 @@ if __name__ == "__main__":
             bar.next()
 
     merger = ImageMerger(tmp_dir,out_dir)
-    with cb("Splitting", max=len(images)) as bar:
+    with cb("Mergeing", max=len(images)) as bar:
         for i in range(len(images)):
             merger.merge(str(i))
             bar.next()
