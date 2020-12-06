@@ -147,7 +147,7 @@ dmypy.json
 #downloadable images
 test_images/
 
-res.png
+*res.png
 
 /008_U-Net/_in
 /008_U-Net/_out
