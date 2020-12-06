@@ -1,4 +1,5 @@
 import tensorflow as tf
+from keras import backend as K
 
 N_FILTERS=3
 DROPOUT=0.5
@@ -44,6 +45,13 @@ def get_model(input_size):
     outputs = tf.keras.layers.Conv2D(1, 1, activation='sigmoid') (l7)
 
     return tf.keras.Model(inputs = inputs, outputs = outputs)
+
+def dice_coef(y_true, y_pred):
+    y_true_f = K.flatten(y_true)
+    y_pred_f = K.flatten(y_pred)
+    intersection = K.sum(y_true_f * y_pred_f)
+    coef = (2. * intersection + K.epsilon()) / (K.sum(y_true_f) + K.sum(y_pred_f) + K.epsilon())
+    return coef
 
 def save_model(model, checkpoint_name, to_json = True):
     # Saving compiled model

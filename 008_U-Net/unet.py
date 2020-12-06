@@ -6,7 +6,7 @@ import tensorflow as tf
 from PIL import Image
 
 from hyperparameters import batch_size, epochs, learning_rate, validation_split
-from model import get_model, save_model
+from model import get_model, save_model, dice_coef
 
 def load_images(dir: str) -> np.array:
     IMAGES_DIRECTORY= os.path.join(os.getcwd(), dir)
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     print('Creating model')
     # Establish the model's topography
     model = get_model((200, 200, 3))
-    model.compile(optimizer = tf.keras.optimizers.Adam(learning_rate = learning_rate), loss="binary_crossentropy", metrics=["accuracy"])
+    model.compile(optimizer = tf.keras.optimizers.Adam(learning_rate = learning_rate), loss="binary_crossentropy", metrics=[dice_coef])
 
     print('Model info')
     print(model.summary())
