@@ -15,10 +15,7 @@ def load_images(dir: str) -> np.array:
     images = np.ones((number_of_images,200,200, 3))
     for i, filename in enumerate(filenames):
         img = Image.open(f"{IMAGES_DIRECTORY}/{filename}")
-        if dir == '_in':
-            images[i] = np.array(img)[:,:,:3]
-        else:
-            images[i] = np.array(img)[:,:,1:]
+        images[i] = np.array(img)[:,:,:3]
     return images
 
 
@@ -30,7 +27,7 @@ if __name__ == "__main__":
     print('Loading data')
     #Loading data
     x_train = load_images(sys.argv[1])
-    y_train = load_images(sys.argv[2])[:,:,:,-1]
+    y_train = load_images(sys.argv[2])[:,:,:,0]
 
     split = int(x_train.shape[0] * (1-validation_split))
 
