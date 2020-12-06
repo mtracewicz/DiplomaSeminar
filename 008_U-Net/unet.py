@@ -24,22 +24,37 @@ if __name__ == "__main__":
         print("Usage: python unet.py inputs_directory truths_directory checkpoint_name")
         exit()
 
+    print('Loading data')
     #Loading data
     x_train = load_images(sys.argv[1])
     y_train = load_images(sys.argv[2])
+
+    split = int(x_train.shape[0] * (1-validation_split))
 
     # Data normalization from [0,255] to [0.0,1.0]
     # and reshaping it for proper dimensions
     x_train= (x_train/255.0).reshape(x_train.shape[0], 200, 200, 3)
     y_train= (y_train/255.0).reshape(y_train.shape[0], 200, 200, 3)
 
-    # Seting tf floating point operations to 64 use bits
-    tf.keras.backend.set_floatx('float64')
+    print('Seting up enviorment')
 
+    # Seting tf/keras options 
+    tf.keras.backend.set_floatx('float64')
+    tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+
+    print('Creating model')
     # Establish the model's topography
     model = get_model(x_train[0].shape)
     model.compile(optimizer = tf.keras.optimizers.Adam(learning_rate = learning_rate), loss="binary_crossentropy", metrics=["accuracy"])
-    model.fit(x_train, y_train, batch_size = batch_size, epochs = epochs)
+
+    print('Model info')
+    print(model.summary())
+
+    print('Traing model')
+    model.fit(x_train[:split], y_train[:split], batch_size = batch_size, epochs = epochs)
+
+    print('Model evaluation')
+    model.evaluate(x_train[split:],y_train[split:])
 
     # Save model
     save_model(model, sys.argv[3])

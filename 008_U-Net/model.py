@@ -1,10 +1,25 @@
 import tensorflow as tf
 
+N_FILTERS=3
+DROPOUT=0.5
 
-def conv2d_block(input_tensor, n_filters, kernel_size=3, batchnorm=True):
+def contracting_block(input_tensor, n_filters):
+    c = conv2d_block(input_tensor, n_filters)
+    p = tf.keras.layers.MaxPooling2D((2, 2))(c)
+    p = tf.keras.layers.Dropout(DROPOUT)(p)
+    return (c,p)
+
+def expansive_block(input_tensor, n_filters, concatenated_layer):
+    u = tf.keras.layers.Conv2DTranspose(n_filters, (3, 3), strides=(2, 2), padding='same') (input_tensor)
+    u = tf.keras.layers.concatenate([u, concatenated_layer])
+    u = tf.keras.layers.Dropout(DROPOUT)(u)
+    c = conv2d_block(u, n_filters)
+    return c
+
+def conv2d_block(input_tensor, n_filters, kernel_size=3):
     # first layer
     x = tf.keras.layers.Conv2D(filters=n_filters, kernel_size=(kernel_size, kernel_size), kernel_initializer="he_normal",
-               padding="same",)(input_tensor)
+               padding="same")(input_tensor)
     x = tf.keras.layers.Activation("relu")(x)
     # second layer
     x = tf.keras.layers.Conv2D(filters=n_filters, kernel_size=(kernel_size, kernel_size), kernel_initializer="he_normal",
@@ -13,51 +28,30 @@ def conv2d_block(input_tensor, n_filters, kernel_size=3, batchnorm=True):
     return x
 
 def get_model(input_size):
-    n_filters=2
-    dropout=0.5
-    batchnorm=True
-
     inputs = tf.keras.Input(input_size)
     # contracting path
-    c1 = conv2d_block(inputs, n_filters=n_filters*1, kernel_size=3, batchnorm=batchnorm)
-    p1 = tf.keras.layers.MaxPooling2D((2, 2))(c1)
-    p1 = tf.keras.layers.Dropout(dropout*0.5)(p1)
+    
+    l1 = contracting_block(inputs,N_FILTERS)
+    l2 = contracting_block(l1[1], N_FILTERS*2)
+    l3 = contracting_block(l2[1], N_FILTERS*4)
 
-    c2 = conv2d_block(p1, n_filters=n_filters*2, kernel_size=3, batchnorm=batchnorm)
-    p2 = tf.keras.layers.MaxPooling2D((2, 2)) (c2)
-    p2 = tf.keras.layers.Dropout(dropout)(p2)
+    l4 = conv2d_block(l3[1], N_FILTERS*8)
 
-    c3 = conv2d_block(p2, n_filters=n_filters*4, kernel_size=3, batchnorm=batchnorm)
-    p3 = tf.keras.layers.MaxPooling2D((2, 2)) (c3)
-    p3 = tf.keras.layers.Dropout(dropout)(p3)
+    # expansive path
+    l5 = expansive_block(l4, N_FILTERS*4, l3[0])
+    l6 = expansive_block(l5, N_FILTERS*2, l2[0])
+    l7 = expansive_block(l6, N_FILTERS*1, l1[0])
+    outputs = tf.keras.layers.Conv2D(1, 1, activation='sigmoid') (l7)
 
-    c4 = conv2d_block(p3, n_filters=n_filters*8, kernel_size=3, batchnorm=batchnorm)
+    return tf.keras.Model(inputs = inputs, outputs = l7)#outputs)
 
-    u5 = tf.keras.layers.Conv2DTranspose(n_filters*4, (3, 3), strides=(2, 2), padding='same') (c4)
-    u5 = tf.keras.layers.concatenate([u5, c3])
-    u5 = tf.keras.layers.Dropout(dropout)(u5)
-    c5 = conv2d_block(u5, n_filters=n_filters*4, kernel_size=3, batchnorm=batchnorm)
-
-    u6 = tf.keras.layers.Conv2DTranspose(n_filters*2, (3, 3), strides=(2, 2), padding='same') (c5)
-    u6 = tf.keras.layers.concatenate([u6, c2])
-    u6 = tf.keras.layers.Dropout(dropout)(u6)
-    c6 = conv2d_block(u6, n_filters=n_filters*2, kernel_size=3, batchnorm=batchnorm)
-
-    u7 = tf.keras.layers.Conv2DTranspose(n_filters*1, (3, 3), strides=(2, 2), padding='same') (c6)
-    u7 = tf.keras.layers.concatenate([u7, c1], axis=3)
-    u7 = tf.keras.layers.Dropout(dropout)(u7)
-    c7 = conv2d_block(u7, n_filters=n_filters*1, kernel_size=3, batchnorm=batchnorm)
-    outputs = tf.keras.layers.Conv2D(1, (1, 1), activation='sigmoid') (c7)
-
-    return tf.keras.Model(inputs=inputs, outputs=outputs)
-
-def save_model(model, checkpoint_name, to_json=True):
+def save_model(model, checkpoint_name, to_json = True):
     # Saving compiled model
     tf.keras.models.save_model(
         model,
         f'./checkpoints/{checkpoint_name}/{checkpoint_name}'
     )
-    # and its topography
+    # Saving fo tensorflowjs 
     if to_json:
         with open(f'./checkpoints/{checkpoint_name}/{checkpoint_name}.json', "w") as file:
             file.write(model.to_json())
