@@ -12,10 +12,17 @@ if __name__ == "__main__":
     # Restoring model
     model = tf.keras.models.load_model(
         f'./checkpoints/{sys.argv[1]}/{sys.argv[1]}')
+
     # Loading data
     image = Image.open(sys.argv[2])
-    data = np.array(image, dtype =np.float64)
-    data.reshape((1,200,200,3))
-    prediction = model.predict(data)
-    res = Image.fromarray((prediction * 255).astype(np.uint8))
-    res.save("res.jpeg")
+    data = np.array(image, dtype = np.float64)
+    # Expanding to add batch dimension
+    data = np.expand_dims(data,axis=0)
+
+    # Making a prediction and converting to uint8
+    prediction = (model.predict(data)*255)[0]
+    prediction = (np.append(prediction,np.zeros((200,200,2)),axis=2)).astype(np.uint8)
+
+    # Creating and saving an image
+    res = Image.fromarray(prediction)
+    res.save("res.png")

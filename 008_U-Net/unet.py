@@ -15,7 +15,10 @@ def load_images(dir: str) -> np.array:
     images = np.ones((number_of_images,200,200, 3))
     for i, filename in enumerate(filenames):
         img = Image.open(f"{IMAGES_DIRECTORY}/{filename}")
-        images[i] = np.array(img)[:,:,:3]
+        if dir == '_in':
+            images[i] = np.array(img)[:,:,:3]
+        else:
+            images[i] = np.array(img)[:,:,1:]
     return images
 
 
@@ -27,14 +30,14 @@ if __name__ == "__main__":
     print('Loading data')
     #Loading data
     x_train = load_images(sys.argv[1])
-    y_train = load_images(sys.argv[2])
+    y_train = load_images(sys.argv[2])[:,:,:,-1]
 
     split = int(x_train.shape[0] * (1-validation_split))
 
     # Data normalization from [0,255] to [0.0,1.0]
     # and reshaping it for proper dimensions
-    x_train= (x_train/255.0).reshape(x_train.shape[0], 200, 200, 3)
-    y_train= (y_train/255.0).reshape(y_train.shape[0], 200, 200, 3)
+    x_train= (x_train/255.0)
+    y_train= (y_train/255.0)
 
     print('Seting up enviorment')
 
@@ -44,7 +47,7 @@ if __name__ == "__main__":
 
     print('Creating model')
     # Establish the model's topography
-    model = get_model(x_train[0].shape)
+    model = get_model((200, 200, 3))
     model.compile(optimizer = tf.keras.optimizers.Adam(learning_rate = learning_rate), loss="binary_crossentropy", metrics=["accuracy"])
 
     print('Model info')

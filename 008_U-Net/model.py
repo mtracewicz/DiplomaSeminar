@@ -43,7 +43,7 @@ def get_model(input_size):
     l7 = expansive_block(l6, N_FILTERS*1, l1[0])
     outputs = tf.keras.layers.Conv2D(1, 1, activation='sigmoid') (l7)
 
-    return tf.keras.Model(inputs = inputs, outputs = l7)#outputs)
+    return tf.keras.Model(inputs = inputs, outputs = outputs)
 
 def save_model(model, checkpoint_name, to_json = True):
     # Saving compiled model
