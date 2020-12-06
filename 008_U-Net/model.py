@@ -12,11 +12,12 @@ def conv2d_block(input_tensor, n_filters, kernel_size=3, batchnorm=True):
     x = tf.keras.layers.Activation("relu")(x)
     return x
 
-def get_model(inputs):
+def get_model(input_size):
     n_filters=2
     dropout=0.5
     batchnorm=True
 
+    inputs = tf.keras.Input(input_size)
     # contracting path
     c1 = conv2d_block(inputs, n_filters=n_filters*1, kernel_size=3, batchnorm=batchnorm)
     p1 = tf.keras.layers.MaxPooling2D((2, 2))(c1)
@@ -31,34 +32,24 @@ def get_model(inputs):
     p3 = tf.keras.layers.Dropout(dropout)(p3)
 
     c4 = conv2d_block(p3, n_filters=n_filters*8, kernel_size=3, batchnorm=batchnorm)
-    p4 = tf.keras.layers.MaxPooling2D(pool_size=(2, 2)) (c4)
-    p4 = tf.keras.layers.Dropout(dropout)(p4)
 
-    c5 = conv2d_block(p4, n_filters=n_filters*16, kernel_size=3, batchnorm=batchnorm)
+    u5 = tf.keras.layers.Conv2DTranspose(n_filters*4, (3, 3), strides=(2, 2), padding='same') (c4)
+    u5 = tf.keras.layers.concatenate([u5, c3])
+    u5 = tf.keras.layers.Dropout(dropout)(u5)
+    c5 = conv2d_block(u5, n_filters=n_filters*4, kernel_size=3, batchnorm=batchnorm)
 
-    ## expansive path
-    u6 = tf.keras.layers.Conv2DTranspose(n_filters*8, (3, 3), strides=(2, 2), padding='same') (c5)
-    u6 = tf.keras.layers.concatenate([u6, c4])
+    u6 = tf.keras.layers.Conv2DTranspose(n_filters*2, (3, 3), strides=(2, 2), padding='same') (c5)
+    u6 = tf.keras.layers.concatenate([u6, c2])
     u6 = tf.keras.layers.Dropout(dropout)(u6)
-    c6 = conv2d_block(u6, n_filters=n_filters*8, kernel_size=3, batchnorm=batchnorm)
+    c6 = conv2d_block(u6, n_filters=n_filters*2, kernel_size=3, batchnorm=batchnorm)
 
-    u7 = tf.keras.layers.Conv2DTranspose(n_filters*4, (3, 3), strides=(2, 2), padding='same') (c6)
-    u7 = tf.keras.layers.concatenate([u7, c3])
+    u7 = tf.keras.layers.Conv2DTranspose(n_filters*1, (3, 3), strides=(2, 2), padding='same') (c6)
+    u7 = tf.keras.layers.concatenate([u7, c1], axis=3)
     u7 = tf.keras.layers.Dropout(dropout)(u7)
-    c7 = conv2d_block(u7, n_filters=n_filters*4, kernel_size=3, batchnorm=batchnorm)
+    c7 = conv2d_block(u7, n_filters=n_filters*1, kernel_size=3, batchnorm=batchnorm)
+    outputs = tf.keras.layers.Conv2D(1, (1, 1), activation='sigmoid') (c7)
 
-    u8 = tf.keras.layers.Conv2DTranspose(n_filters*2, (3, 3), strides=(2, 2), padding='same') (c7)
-    u8 = tf.keras.layers.concatenate([u8, c2])
-    u8 = tf.keras.layers.Dropout(dropout)(u8)
-    c8 = conv2d_block(u8, n_filters=n_filters*2, kernel_size=3, batchnorm=batchnorm)
-
-    u9 = tf.keras.layers.Conv2DTranspose(n_filters*1, (3, 3), strides=(2, 2), padding='same') (c8)
-    u9 = tf.keras.layers.concatenate([u9, c1], axis=3)
-    u9 = tf.keras.layers.Dropout(dropout)(u9)
-    c9 = conv2d_block(u9, n_filters=n_filters*1, kernel_size=3, batchnorm=batchnorm)
-    outputs = tf.keras.layers.Conv2D(1, (1, 1), activation='sigmoid') (c9)
-
-    return tf.keras.model(inputs=input, outputs=output)
+    return tf.keras.Model(inputs=inputs, outputs=outputs)
 
 def save_model(model, checkpoint_name, to_json=True):
     # Saving compiled model
