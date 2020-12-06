@@ -8,3 +8,7 @@ This repository contains my notes and programs created during my Diploma Seminar
 * 004_Pandas - Notes and code examples about Pandas library
 * 005_Notes - Random notes on topics related to thesis 
 * 006_NeuralNetworks - Notes about neural networks as well as implementation of MINST problem with basic neural network and convulutional one
+* 007_ShortTermFourierTransform - Presentation about Short Term Fourier Transform
+* 008_U-Net - My U-Net for thesis -> cell segmentation
+* 009_ImageManipulation - Scripts to manipulate input/output images for u-net
+* 010_Docker - Script to ruin inside docker container to prepare it to work on this project
