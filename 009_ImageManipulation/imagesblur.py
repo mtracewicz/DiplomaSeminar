@@ -1,12 +1,15 @@
 import os
 import sys
 from progress.bar import ChargingBar as cb
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, UnidentifiedImageError
 
 def blur_file(filepath):
-    im = Image.open(filepath)
-    im = im.filter(ImageFilter.GaussianBlur(2))
-    im.save(filepath)
+    try:
+        im = Image.open(filepath)
+        im = im.filter(ImageFilter.GaussianBlur(2))
+        im.save(filepath)
+    except UnidentifiedImageError:
+        print(f'\nError processing file: {filepath}!\n')
 
 def blur_dir(dir):
     files = os.listdir(dir)
